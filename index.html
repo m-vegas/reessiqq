@@ -28,74 +28,47 @@
             background: var(--twitch-dark);
             color: var(--twitch-light);
             overflow-x: hidden;
-            background-image: 
-                radial-gradient(circle at 10% 20%, rgba(145, 71, 255, 0.15) 0%, transparent 25%),
-                radial-gradient(circle at 90% 80%, rgba(255, 102, 196, 0.15) 0%, transparent 25%),
-                url('https://images.unsplash.com/photo-1633613286848-e6f43bbafb8d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');
-            background-size: cover;
-            background-attachment: fixed;
-            background-position: center;
             position: relative;
         }
 
-        /* Анимация сердечек */
-        .pixel-hearts {
+        /* Новый фон с анимированными градиентами */
+        .bg-animation {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            pointer-events: none;
             z-index: -1;
+            background: linear-gradient(-45deg, #0e0e10, #1a0e2a, #0e0e10, #2a0e1a);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
         }
 
-        .pixel-heart {
-            position: absolute;
-            width: 16px;
-            height: 16px;
-            background: var(--accent-pink);
-            transform: rotate(45deg);
-            opacity: 0;
-            animation: float-up 5s linear infinite;
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
-        .pixel-heart:before, .pixel-heart:after {
-            content: '';
-            position: absolute;
-            width: 16px;
-            height: 16px;
-            background: var(--accent-pink);
-            border-radius: 50%;
-        }
-
-        .pixel-heart:before {
-            top: -8px;
-            left: 0;
-        }
-
-        .pixel-heart:after {
+        /* Эффекты частиц */
+        .particles {
+            position: fixed;
             top: 0;
-            left: -8px;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
         }
 
-        @keyframes float-up {
-            0% {
-                transform: rotate(45deg) translateY(100vh) scale(0);
-                opacity: 0;
-            }
-            10% {
-                opacity: 1;
-            }
-            90% {
-                opacity: 1;
-            }
-            100% {
-                transform: rotate(45deg) translateY(-100px) scale(1.5);
-                opacity: 0;
-            }
+        .particle {
+            position: absolute;
+            background: rgba(145, 71, 255, 0.5);
+            border-radius: 50%;
+            pointer-events: none;
         }
 
-        /* Эпичная загрузка */
+        /* Улучшенный прелоадер */
         .preloader {
             position: fixed;
             top: 0;
@@ -130,14 +103,13 @@
             width: 0%;
             background: linear-gradient(90deg, var(--twitch-purple), var(--accent-pink));
             border-radius: 10px;
-            animation: loading 3s ease-in-out infinite;
+            animation: loading 3s ease-in-out forwards;
             box-shadow: var(--neon-effect);
         }
 
         @keyframes loading {
             0% { width: 0%; }
-            50% { width: 100%; }
-            100% { width: 0%; }
+            100% { width: 100%; }
         }
 
         .loading-text {
@@ -147,74 +119,27 @@
             text-shadow: 0 0 10px var(--accent-blue);
             margin-bottom: 20px;
             text-align: center;
+            animation: textGlow 2s infinite alternate;
         }
 
-        .pixel-battle {
-            display: flex;
-            align-items: center;
-            gap: 30px;
-            margin-top: 40px;
+        @keyframes textGlow {
+            from { text-shadow: 0 0 10px var(--accent-blue); }
+            to { text-shadow: 0 0 20px var(--accent-blue), 0 0 30px var(--twitch-purple); }
         }
 
-        .pixel-heart, .pixel-sword {
-            position: relative;
-            width: 40px;
-            height: 40px;
-            animation: float 3s ease-in-out infinite;
-        }
-
-        .pixel-heart {
-            background: var(--accent-pink);
-            transform: rotate(45deg);
-            box-shadow: 0 0 15px var(--accent-pink);
-        }
-
-        .pixel-heart:before, .pixel-heart:after {
-            content: '';
-            position: absolute;
-            width: 40px;
-            height: 40px;
-            background: var(--accent-pink);
-            border-radius: 50%;
-            box-shadow: 0 0 15px var(--accent-pink);
-        }
-
-        .pixel-heart:before {
-            top: -20px;
-            left: 0;
-        }
-
-        .pixel-heart:after {
-            top: 0;
-            left: -20px;
-        }
-
-        .pixel-sword {
-            background: var(--accent-blue);
-            clip-path: polygon(
-                50% 0%, 60% 0%, 60% 70%, 
-                80% 70%, 50% 100%, 20% 70%,
-                40% 70%, 40% 0%, 50% 0%
-            );
-            box-shadow: 0 0 15px var(--accent-blue);
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0) rotate(45deg); }
-            50% { transform: translateY(-20px) rotate(45deg); }
-        }
-
-        .vs-text {
+        .loading-complete {
             font-family: 'Press Start 2P', cursive;
-            font-size: 24px;
-            color: white;
-            text-shadow: 0 0 10px red;
-            animation: pulse 1.5s infinite;
+            font-size: 16px;
+            color: var(--accent-pink);
+            margin-top: 20px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
         }
 
-        @keyframes pulse {
-            0%, 100% { opacity: 0.7; }
-            50% { opacity: 1; }
+        .loading-complete.show {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         /* Основной контент */
@@ -789,20 +714,17 @@
     </style>
 </head>
 <body>
-    <!-- Анимация сердечек -->
-    <div class="pixel-hearts" id="pixel-hearts"></div>
+    <!-- Новый анимированный фон -->
+    <div class="bg-animation"></div>
+    <div class="particles" id="particles"></div>
 
-    <!-- Эпичная загрузка -->
+    <!-- Улучшенный прелоадер -->
     <div class="preloader" id="preloader">
-        <div class="loading-text">Погружаемся в мир ...</div>
+        <div class="loading-text">ЗАГРУЗКА КОНТЕНТА</div>
         <div class="loading-container">
             <div class="loading-bar"></div>
         </div>
-        <div class="pixel-battle">
-            <div class="pixel-heart"></div>
-            <div class="vs-text">VS</div>
-            <div class="pixel-sword"></div>
-        </div>
+        <div class="loading-complete" id="loading-complete">ГОТОВО!</div>
     </div>
 
     <!-- Основной контент -->
@@ -919,67 +841,87 @@
     </div>
 
     <script>
-        // Создаем анимацию сердечек
-        function createHearts() {
-            const heartsContainer = document.getElementById('pixel-hearts');
-            const heartCount = 20;
+        // Создаем эффект частиц
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 50;
             
-            for (let i = 0; i < heartCount; i++) {
-                const heart = document.createElement('div');
-                heart.className = 'pixel-heart';
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
                 
-                // Случайная позиция по горизонтали
-                heart.style.left = Math.random() * 100 + 'vw';
+                // Случайные параметры частицы
+                const size = Math.random() * 5 + 1;
+                const posX = Math.random() * 100;
+                const posY = Math.random() * 100;
+                const delay = Math.random() * 5;
+                const duration = Math.random() * 10 + 10;
+                const opacity = Math.random() * 0.5 + 0.1;
                 
-                // Случайная задержка анимации
-                heart.style.animationDelay = Math.random() * 5 + 's';
+                // Применяем параметры
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.left = `${posX}%`;
+                particle.style.top = `${posY}%`;
+                particle.style.opacity = opacity;
+                particle.style.animation = `floatParticle ${duration}s linear ${delay}s infinite`;
                 
-                // Случайный размер
-                const size = 8 + Math.random() * 16;
-                heart.style.width = size + 'px';
-                heart.style.height = size + 'px';
-                
-                // Для псевдоэлементов
-                heart.style.setProperty('--size', size + 'px');
-                
-                heartsContainer.appendChild(heart);
+                particlesContainer.appendChild(particle);
             }
+            
+            // Добавляем анимацию для частиц
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes floatParticle {
+                    0% { transform: translateY(0) translateX(0); }
+                    25% { transform: translateY(-20vh) translateX(10vw); }
+                    50% { transform: translateY(-40vh) translateX(0); }
+                    75% { transform: translateY(-60vh) translateX(-10vw); }
+                    100% { transform: translateY(-80vh) translateX(0); opacity: 0; }
+                }
+            `;
+            document.head.appendChild(style);
         }
 
-        // Эпичная загрузка
+        // Улучшенный прелоадер
         document.addEventListener('DOMContentLoaded', function() {
-            // Создаем сердечки сразу
-            createHearts();
+            createParticles();
             
             const preloader = document.getElementById('preloader');
             const content = document.getElementById('content');
+            const loadingComplete = document.getElementById('loading-complete');
             
             // Имитация загрузки
             setTimeout(() => {
-                preloader.style.opacity = '0';
+                // Показываем сообщение о завершении загрузки
+                loadingComplete.classList.add('show');
+                
+                // Через 1 секунду скрываем прелоадер
                 setTimeout(() => {
-                    preloader.style.display = 'none';
-                    content.style.display = 'block';
-                    setTimeout(() => {
-                        content.style.opacity = '1';
-                    }, 100);
-                    
-                    // Анимация появления элементов
-                    const fadeElements = document.querySelectorAll('.fade-in');
-                    fadeElements.forEach(el => {
-                        el.style.opacity = '0';
-                    });
+                    preloader.style.opacity = '0';
                     
                     setTimeout(() => {
-                        fadeElements.forEach(el => {
-                            el.style.animationPlayState = 'running';
-                        });
-                    }, 500);
-                    
-                    // Создаем сердечки снова после загрузки
-                    createHearts();
-                }, 800);
-            }, 3500);
+                        preloader.style.display = 'none';
+                        content.style.display = 'block';
+                        
+                        setTimeout(() => {
+                            content.style.opacity = '1';
+                            
+                            // Анимация появления элементов
+                            const fadeElements = document.querySelectorAll('.fade-in');
+                            fadeElements.forEach(el => {
+                                el.style.opacity = '0';
+                            });
+                            
+                            setTimeout(() => {
+                                fadeElements.forEach(el => {
+                                    el.style.animationPlayState = 'running';
+                                });
+                            }, 500);
+                        }, 100);
+                    }, 800);
+                }, 1000);
+            }, 3000);
 
             // Заполняем галерею
             const galleryData = [
