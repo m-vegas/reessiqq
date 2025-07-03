@@ -948,6 +948,7 @@
 
         // Эпичная загрузка
         document.addEventListener('DOMContentLoaded', function() {
+            // Создаем сердечки сразу
             createHearts();
             
             const preloader = document.getElementById('preloader');
@@ -974,6 +975,9 @@
                             el.style.animationPlayState = 'running';
                         });
                     }, 500);
+                    
+                    // Создаем сердечки снова после загрузки
+                    createHearts();
                 }, 800);
             }, 3500);
 
