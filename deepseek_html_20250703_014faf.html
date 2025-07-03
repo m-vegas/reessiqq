@@ -1,0 +1,1084 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reessiqq - топовая стримерша на Twitch</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --twitch-purple: #9147ff;
+            --twitch-dark: #0e0e10;
+            --twitch-light: #f1f1f1;
+            --accent-pink: #ff66c4;
+            --accent-blue: #00c9ff;
+            --neon-effect: 0 0 10px rgba(145, 71, 255, 0.8), 0 0 20px rgba(145, 71, 255, 0.6);
+            --section-bg: rgba(20, 20, 30, 0.8);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: var(--twitch-dark);
+            color: var(--twitch-light);
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 25% 25%, rgba(145, 71, 255, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 75% 75%, rgba(255, 102, 196, 0.15) 0%, transparent 50%);
+        }
+
+        /* Эпичная загрузка */
+        .preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--twitch-dark);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.8s ease-out;
+        }
+
+        .loading-container {
+            position: relative;
+            width: 300px;
+            height: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 30px 0;
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .loading-bar {
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--twitch-purple), var(--accent-pink));
+            border-radius: 10px;
+            animation: loading 3s ease-in-out infinite;
+            box-shadow: var(--neon-effect);
+        }
+
+        @keyframes loading {
+            0% { width: 0%; }
+            50% { width: 100%; }
+            100% { width: 0%; }
+        }
+
+        .loading-text {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 18px;
+            color: var(--twitch-light);
+            text-shadow: 0 0 10px var(--accent-blue);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .pixel-battle {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .pixel-heart, .pixel-sword {
+            position: relative;
+            width: 40px;
+            height: 40px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .pixel-heart {
+            background: var(--accent-pink);
+            transform: rotate(45deg);
+            box-shadow: 0 0 15px var(--accent-pink);
+        }
+
+        .pixel-heart:before, .pixel-heart:after {
+            content: '';
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            background: var(--accent-pink);
+            border-radius: 50%;
+            box-shadow: 0 0 15px var(--accent-pink);
+        }
+
+        .pixel-heart:before {
+            top: -20px;
+            left: 0;
+        }
+
+        .pixel-heart:after {
+            top: 0;
+            left: -20px;
+        }
+
+        .pixel-sword {
+            background: var(--accent-blue);
+            clip-path: polygon(
+                50% 0%, 60% 0%, 60% 70%, 
+                80% 70%, 50% 100%, 20% 70%,
+                40% 70%, 40% 0%, 50% 0%
+            );
+            box-shadow: 0 0 15px var(--accent-blue);
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(45deg); }
+            50% { transform: translateY(-20px) rotate(45deg); }
+        }
+
+        .vs-text {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 24px;
+            color: white;
+            text-shadow: 0 0 10px red;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.7; }
+            50% { opacity: 1; }
+        }
+
+        /* Основной контент */
+        .content {
+            display: none;
+            opacity: 0;
+            transition: opacity 1s ease;
+        }
+
+        /* Гламурный хедер */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            background: rgba(14, 14, 16, 0.9);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        header.scrolled {
+            padding: 15px 40px;
+            background: rgba(14, 14, 16, 0.95);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo img {
+            height: 50px;
+            transition: all 0.3s;
+        }
+
+        .logo:hover img {
+            transform: scale(1.1);
+        }
+
+        .logo-text {
+            font-weight: 700;
+            font-size: 24px;
+            background: linear-gradient(45deg, var(--twitch-purple), var(--accent-pink));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 10px rgba(145, 71, 255, 0.3);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        nav a {
+            color: var(--twitch-light);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 18px;
+            position: relative;
+            padding: 5px 0;
+            transition: all 0.3s;
+        }
+
+        nav a:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--twitch-purple), var(--accent-pink));
+            transition: width 0.3s;
+        }
+
+        nav a:hover {
+            color: white;
+        }
+
+        nav a:hover:after {
+            width: 100%;
+        }
+
+        /* Герой секция */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 120px 40px 80px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80') center/cover;
+            opacity: 0.3;
+            z-index: -1;
+        }
+
+        .hero-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            gap: 60px;
+            width: 100%;
+        }
+
+        .hero-text {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .hero-title {
+            font-size: 72px;
+            font-weight: 900;
+            margin-bottom: 30px;
+            background: linear-gradient(45deg, var(--twitch-purple), var(--accent-pink));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.2;
+        }
+
+        .hero-subtitle {
+            font-size: 24px;
+            margin-bottom: 40px;
+            line-height: 1.6;
+            max-width: 600px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, var(--twitch-purple), var(--accent-pink));
+            color: white;
+            box-shadow: 0 5px 15px rgba(145, 71, 255, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(145, 71, 255, 0.6);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--twitch-light);
+            border: 2px solid var(--twitch-purple);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(145, 71, 255, 0.2);
+            border-color: var(--accent-pink);
+        }
+
+        .btn i {
+            margin-right: 10px;
+            font-size: 20px;
+        }
+
+        .twitch-embed {
+            flex: 1;
+            min-width: 300px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+            transform: perspective(1000px) rotateY(-10deg) rotateX(5deg);
+            transition: all 0.5s;
+            position: relative;
+            z-index: 2;
+        }
+
+        .twitch-embed:hover {
+            transform: perspective(1000px) rotateY(0) rotateX(0) scale(1.05);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6);
+        }
+
+        .twitch-embed iframe {
+            width: 100%;
+            height: 400px;
+            border: none;
+        }
+
+        /* Секции */
+        section {
+            padding: 100px 40px;
+            position: relative;
+        }
+
+        .section-title {
+            font-size: 48px;
+            font-weight: 900;
+            margin-bottom: 60px;
+            text-align: center;
+            background: linear-gradient(45deg, var(--twitch-purple), var(--accent-pink));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            position: relative;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--twitch-purple), var(--accent-pink));
+            border-radius: 3px;
+        }
+
+        /* Обо мне */
+        .about {
+            background: var(--section-bg);
+            backdrop-filter: blur(10px);
+            border-radius: 30px;
+            margin: 40px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .about-content {
+            display: flex;
+            align-items: center;
+            gap: 60px;
+            max-width: 1400px;
+            margin: 0 auto;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .about-text {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .about-text p {
+            font-size: 18px;
+            line-height: 1.8;
+            margin-bottom: 25px;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .about-image {
+            flex: 1;
+            min-width: 300px;
+            position: relative;
+        }
+
+        .about-image img {
+            width: 100%;
+            max-width: 500px;
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+            transition: transform 0.5s;
+        }
+
+        .about-image:hover img {
+            transform: scale(1.03);
+        }
+
+        .about-image:before {
+            content: '';
+            position: absolute;
+            top: -20px;
+            left: -20px;
+            width: 100%;
+            height: 100%;
+            border: 3px solid var(--twitch-purple);
+            border-radius: 20px;
+            z-index: -1;
+            opacity: 0.7;
+            transition: all 0.5s;
+        }
+
+        .about-image:hover:before {
+            top: -15px;
+            left: -15px;
+            opacity: 1;
+        }
+
+        /* Расписание */
+        .schedule {
+            background: url('https://images.unsplash.com/photo-1560253023-3ec5d502959f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80') center/cover;
+            position: relative;
+            z-index: 1;
+        }
+
+        .schedule:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(14, 14, 16, 0.9);
+            z-index: -1;
+        }
+
+        .schedule-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .schedule-day {
+            background: var(--section-bg);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            transition: all 0.5s;
+            border: 1px solid rgba(145, 71, 255, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .schedule-day:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+            border-color: var(--twitch-purple);
+        }
+
+        .schedule-day h3 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: var(--accent-pink);
+            position: relative;
+            display: inline-block;
+        }
+
+        .schedule-day h3:after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--accent-pink);
+            border-radius: 3px;
+        }
+
+        .schedule-item {
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px dashed rgba(255, 255, 255, 0.1);
+        }
+
+        .schedule-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .schedule-time {
+            font-weight: 700;
+            color: var(--twitch-purple);
+            font-size: 20px;
+            margin-bottom: 5px;
+        }
+
+        .schedule-game {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .schedule-desc {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 14px;
+        }
+
+        /* Галерея */
+        .gallery {
+            background: var(--section-bg);
+            backdrop-filter: blur(10px);
+            border-radius: 30px;
+            margin: 40px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .gallery-item {
+            border-radius: 15px;
+            overflow: hidden;
+            position: relative;
+            aspect-ratio: 16/9;
+            transition: all 0.5s;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .gallery-item:after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent 50%);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .gallery-item:hover:after {
+            opacity: 1;
+        }
+
+        /* Донаты */
+        .donate {
+            background: url('https://images.unsplash.com/photo-1511795409834-ef04bbd61622?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1469&q=80') center/cover;
+            position: relative;
+            z-index: 1;
+        }
+
+        .donate:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(14, 14, 16, 0.9);
+            z-index: -1;
+        }
+
+        .donate-methods {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .method {
+            background: var(--section-bg);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px 30px;
+            text-align: center;
+            flex: 1;
+            min-width: 300px;
+            transition: all 0.5s;
+            border: 1px solid rgba(145, 71, 255, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .method:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+            border-color: var(--twitch-purple);
+        }
+
+        .method-icon {
+            font-size: 50px;
+            margin-bottom: 20px;
+            color: var(--twitch-purple);
+        }
+
+        .method h3 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: white;
+        }
+
+        .method p {
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        /* Футер */
+        footer {
+            background: linear-gradient(to right, #0a0a0c, #141420);
+            padding: 60px 40px 30px;
+            text-align: center;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 24px;
+            transition: all 0.3s;
+        }
+
+        .social-links a:hover {
+            background: var(--twitch-purple);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(145, 71, 255, 0.4);
+        }
+
+        .footer-text {
+            color: rgba(255, 255, 255, 0.6);
+            margin-top: 30px;
+            font-size: 14px;
+        }
+
+        /* Анимации и эффекты */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in {
+            animation: fadeIn 1s ease forwards;
+        }
+
+        .delay-1 { animation-delay: 0.2s; }
+        .delay-2 { animation-delay: 0.4s; }
+        .delay-3 { animation-delay: 0.6s; }
+        .delay-4 { animation-delay: 0.8s; }
+
+        /* Адаптивность */
+        @media (max-width: 1200px) {
+            .hero-title {
+                font-size: 60px;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .hero-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .hero-text {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .hero-buttons {
+                justify-content: center;
+            }
+            
+            .section-title {
+                font-size: 40px;
+            }
+            
+            header {
+                padding: 15px 20px;
+            }
+            
+            nav ul {
+                gap: 15px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 48px;
+            }
+            
+            .hero-subtitle {
+                font-size: 20px;
+            }
+            
+            .section-title {
+                font-size: 36px;
+            }
+            
+            .about, .gallery {
+                margin: 20px;
+            }
+            
+            section {
+                padding: 60px 20px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero-title {
+                font-size: 36px;
+            }
+            
+            .hero-subtitle {
+                font-size: 18px;
+            }
+            
+            .btn {
+                padding: 12px 25px;
+                font-size: 16px;
+            }
+            
+            .section-title {
+                font-size: 32px;
+            }
+            
+            .schedule-day, .method {
+                min-width: 100%;
+            }
+            
+            .logo-text {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Эпичная загрузка -->
+    <div class="preloader" id="preloader">
+        <div class="loading-text">REESSIQQ LOADING...</div>
+        <div class="loading-container">
+            <div class="loading-bar"></div>
+        </div>
+        <div class="pixel-battle">
+            <div class="pixel-heart"></div>
+            <div class="vs-text">VS</div>
+            <div class="pixel-sword"></div>
+        </div>
+    </div>
+
+    <!-- Основной контент -->
+    <div class="content" id="content">
+        <!-- Гламурный хедер -->
+        <header id="header">
+            <div class="logo">
+                <!-- ЗАМЕНИТЬ НА РЕАЛЬНЫЙ ЛОГОТИП -->
+                <img src="https://via.placeholder.com/200x60?text=REESSIQQ" alt="Reessiqq Logo">
+                <div class="logo-text">REESSIQQ</div>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#about">Обо мне</a></li>
+                    <li><a href="#schedule">Расписание</a></li>
+                    <li><a href="#gallery">Галерея</a></li>
+                    <li><a href="#donate">Поддержать</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <!-- Герой секция -->
+        <section class="hero">
+            <div class="hero-bg"></div>
+            <div class="hero-content">
+                <div class="hero-text fade-in">
+                    <h1 class="hero-title">Добро пожаловать на мой канал!</h1>
+                    <p class="hero-subtitle">Я Reessiqq - топовая стримерша на Twitch. Люблю игры, общение и хорошее настроение. Присоединяйся к моему комьюнити!</p>
+                    <div class="hero-buttons">
+                        <a href="https://www.twitch.tv/reessiqq" class="btn btn-primary fade-in delay-1">
+                            <i class="fab fa-twitch"></i> Смотреть стрим
+                        </a>
+                        <a href="#donate" class="btn btn-secondary fade-in delay-2">
+                            <i class="fas fa-heart"></i> Поддержать
+                        </a>
+                    </div>
+                </div>
+                <div class="twitch-embed fade-in delay-3">
+                    <!-- ЗАМЕНИТЕ 'www.yourdomain.com' НА ВАШ ДОМЕН -->
+                    <iframe src="https://player.twitch.tv/?channel=reessiqq&parent=www.yourdomain.com" frameborder="0" allowfullscreen="true" scrolling="no"></iframe>
+                </div>
+            </div>
+        </section>
+
+        <!-- Обо мне -->
+        <section id="about" class="about">
+            <h2 class="section-title">Обо мне</h2>
+            <div class="about-content">
+                <div class="about-text fade-in">
+                    <p>Привет! Меня зовут Reessiqq и я профессиональный стример на платформе Twitch. Мои стримы - это не просто игры, а целое шоу с атмосферой, шутками и взаимодействием с аудиторией.</p>
+                    <p>Я играю в самые разные игры: от хорроров (которые иногда смотрю через пальцы) до конкурентных шутеров. Но главное в моих стримах - это всегда хорошее настроение и позитив!</p>
+                    <p>На моем канале ты найдешь:</p>
+                    <ul style="margin-left: 20px; margin-bottom: 25px;">
+                        <li>Ежедневные стримы с качественным контентом</li>
+                        <li>Интерактив с аудиторией</li>
+                        <li>Турниры и ивенты</li>
+                        <li>Приятное комьюнити</li>
+                    </ul>
+                    <p>Подписывайся на канал и присоединяйся к нашей тусовке!</p>
+                </div>
+                <div class="about-image fade-in delay-1">
+                    <!-- ЗАМЕНИТЬ НА РЕАЛЬНОЕ ФОТО -->
+                    <img src="https://images.unsplash.com/photo-1593697909683-bccb1b9e68a4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80" alt="Reessiqq">
+                </div>
+            </div>
+        </section>
+
+        <!-- Расписание -->
+        <section id="schedule" class="schedule">
+            <h2 class="section-title">Расписание стримов</h2>
+            <div class="schedule-grid" id="schedule-grid">
+                <!-- Заполняется через JS -->
+            </div>
+        </section>
+
+        <!-- Галерея -->
+        <section id="gallery" class="gallery">
+            <h2 class="section-title">Галерея</h2>
+            <div class="gallery-grid" id="gallery-grid">
+                <!-- Заполняется через JS -->
+            </div>
+        </section>
+
+        <!-- Донаты -->
+        <section id="donate" class="donate">
+            <h2 class="section-title">Поддержать стримера</h2>
+            <div class="donate-methods">
+                <div class="method fade-in">
+                    <div class="method-icon">
+                        <i class="fas fa-money-bill-wave"></i>
+                    </div>
+                    <h3>DonationAlerts</h3>
+                    <p>Мгновенные донаты с возможностью написать сообщение и настроить алерт</p>
+                    <!-- ЗАМЕНИТЬ НА РЕАЛЬНУЮ ССЫЛКУ -->
+                    <a href="https://www.donationalerts.com/r/reessiqq" class="btn btn-primary">Поддержать</a>
+                </div>
+                <div class="method fade-in delay-1">
+                    <div class="method-icon">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <h3>Boosty</h3>
+                    <p>Подписка с эксклюзивным контентом и бонусами для подписчиков</p>
+                    <!-- ЗАМЕНИТЬ НА РЕАЛЬНУЮ ССЫЛКУ -->
+                    <a href="https://boosty.to/reessiqq" class="btn btn-primary">Подписаться</a>
+                </div>
+                <div class="method fade-in delay-2">
+                    <div class="method-icon">
+                        <i class="fab fa-twitch"></i>
+                    </div>
+                    <h3>Twitch Sub</h3>
+                    <p>Оформи подписку на Twitch и получай особые эмоции и бейджи</p>
+                    <a href="https://www.twitch.tv/reessiqq/subscribe" class="btn btn-primary">Подписаться</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Футер -->
+        <footer>
+            <div class="social-links">
+                <a href="https://www.twitch.tv/reessiqq"><i class="fab fa-twitch"></i></a>
+                <!-- ЗАМЕНИТЬ НА РЕАЛЬНЫЕ ССЫЛКИ -->
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-discord"></i></a>
+                <a href="#"><i class="fab fa-tiktok"></i></a>
+            </div>
+            <p class="footer-text">© 2023 Reessiqq. Все права защищены.</p>
+            <p class="footer-text">Сайт создан с любовью для фанатов</p>
+        </footer>
+    </div>
+
+    <script>
+        // Эпичная загрузка
+        document.addEventListener('DOMContentLoaded', function() {
+            const preloader = document.getElementById('preloader');
+            const content = document.getElementById('content');
+            
+            // Имитация загрузки
+            setTimeout(() => {
+                preloader.style.opacity = '0';
+                setTimeout(() => {
+                    preloader.style.display = 'none';
+                    content.style.display = 'block';
+                    setTimeout(() => {
+                        content.style.opacity = '1';
+                    }, 100);
+                    
+                    // Анимация появления элементов
+                    const fadeElements = document.querySelectorAll('.fade-in');
+                    fadeElements.forEach(el => {
+                        el.style.opacity = '0';
+                    });
+                    
+                    setTimeout(() => {
+                        fadeElements.forEach(el => {
+                            el.style.animationPlayState = 'running';
+                        });
+                    }, 500);
+                }, 800);
+            }, 3500);
+            
+            // Заполняем расписание
+            const scheduleData = [
+                { 
+                    day: 'Понедельник', 
+                    items: [
+                        { time: '19:00', game: 'Valorant', desc: 'Ранкед игры с подписчиками' },
+                        { time: '21:00', game: 'Just Chatting', desc: 'Разбор донатов и общение' }
+                    ]
+                },
+                { 
+                    day: 'Среда', 
+                    items: [
+                        { time: '18:00', game: 'Minecraft', desc: 'Строим мега-проекты' },
+                        { time: '20:00', game: 'Новые игры', desc: 'Тестируем новинки' }
+                    ]
+                },
+                { 
+                    day: 'Пятница', 
+                    items: [
+                        { time: '20:00', game: 'Horror Night', desc: 'Проходим хорроры (если не испугаюсь)' }
+                    ]
+                },
+                { 
+                    day: 'Суббота', 
+                    items: [
+                        { time: '15:00', game: 'Special Event', desc: 'Турниры/ивенты с подписчиками' },
+                        { time: '19:00', game: 'Variety Games', desc: 'Играем во что захотим' }
+                    ]
+                },
+                { 
+                    day: 'Воскресенье', 
+                    items: [
+                        { time: '14:00', game: 'Q&A Session', desc: 'Отвечаю на ваши вопросы' },
+                        { time: '17:00', game: 'Chill Stream', desc: 'Расслабленный стрим' }
+                    ]
+                }
+            ];
+
+            const scheduleGrid = document.getElementById('schedule-grid');
+            scheduleData.forEach(day => {
+                const dayElement = document.createElement('div');
+                dayElement.className = 'schedule-day fade-in';
+                dayElement.innerHTML = `
+                    <h3>${day.day}</h3>
+                    ${day.items.map(item => `
+                        <div class="schedule-item">
+                            <div class="schedule-time">${item.time}</div>
+                            <div class="schedule-game">${item.game}</div>
+                            <div class="schedule-desc">${item.desc}</div>
+                        </div>
+                    `).join('')}
+                `;
+                scheduleGrid.appendChild(dayElement);
+            });
+
+            // Заполняем галерею
+            const galleryData = [
+                { img: 'https://images.unsplash.com/photo-1593508512255-86ab42a8e620?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1478&q=80' },
+                { img: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80' },
+                { img: 'https://images.unsplash.com/photo-1493711662062-fa541adb3fc8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80' },
+                { img: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80' },
+                { img: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80' },
+                { img: 'https://images.unsplash.com/photo-1493711662062-fa541adb3fc8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80' }
+            ];
+
+            const galleryGrid = document.getElementById('gallery-grid');
+            galleryData.forEach(item => {
+                const galleryItem = document.createElement('div');
+                galleryItem.className = 'gallery-item fade-in';
+                galleryItem.innerHTML = `
+                    <img src="${item.img}" alt="Stream moment">
+                `;
+                galleryGrid.appendChild(galleryItem);
+            });
+
+            // Скролл хедера
+            window.addEventListener('scroll', function() {
+                const header = document.getElementById('header');
+                if (window.scrollY > 50) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
