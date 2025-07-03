@@ -35,6 +35,64 @@
             background-size: cover;
             background-attachment: fixed;
             background-position: center;
+            position: relative;
+        }
+
+        /* Анимация сердечек */
+        .pixel-hearts {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .pixel-heart {
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            background: var(--accent-pink);
+            transform: rotate(45deg);
+            opacity: 0;
+            animation: float-up 5s linear infinite;
+        }
+
+        .pixel-heart:before, .pixel-heart:after {
+            content: '';
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            background: var(--accent-pink);
+            border-radius: 50%;
+        }
+
+        .pixel-heart:before {
+            top: -8px;
+            left: 0;
+        }
+
+        .pixel-heart:after {
+            top: 0;
+            left: -8px;
+        }
+
+        @keyframes float-up {
+            0% {
+                transform: rotate(45deg) translateY(100vh) scale(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: rotate(45deg) translateY(-100px) scale(1.5);
+                opacity: 0;
+            }
         }
 
         /* Эпичная загрузка */
@@ -196,11 +254,16 @@
 
         .logo img {
             height: 50px;
+            width: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--twitch-purple);
             transition: all 0.3s;
         }
 
         .logo:hover img {
             transform: scale(1.1);
+            box-shadow: 0 0 15px var(--twitch-purple);
         }
 
         .logo-text {
@@ -349,17 +412,17 @@
         }
 
         /* Видео контейнер */
-        #content-container {
-            width: 100%;
-            max-width: 800px;
-            margin: 0 auto;
+        .video-container {
+            flex: 1;
+            min-width: 300px;
+            max-width: 600px;
             border-radius: 15px;
             overflow: hidden;
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
             position: relative;
         }
 
-        #content-container video {
+        .video-container video {
             width: 100%;
             display: block;
         }
@@ -552,20 +615,8 @@
 
         /* Донаты */
         .donate {
-            background: url('https://img.freepik.com/premium-vector/pixel-art-donat_565656-6.jpg') center/cover;
             position: relative;
             z-index: 1;
-        }
-
-        .donate:before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(14, 14, 16, 0.9);
-            z-index: -1;
         }
 
         .donate-methods {
@@ -616,35 +667,10 @@
 
         /* Футер */
         footer {
-            background: linear-gradient(to right, #0a0a0c, #141420);
+            background: transparent;
             padding: 60px 40px 30px;
             text-align: center;
-        }
-
-        .social-links {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            margin-bottom: 40px;
-        }
-
-        .social-links a {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-            font-size: 24px;
-            transition: all 0.3s;
-        }
-
-        .social-links a:hover {
-            background: var(--twitch-purple);
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(145, 71, 255, 0.4);
+            position: relative;
         }
 
         .footer-text {
@@ -673,11 +699,19 @@
             .hero-title {
                 font-size: 60px;
             }
+            
+            .hero-content {
+                flex-direction: column;
+            }
+            
+            .video-container {
+                order: -1;
+                max-width: 800px;
+            }
         }
 
         @media (max-width: 992px) {
             .hero-content {
-                flex-direction: column;
                 text-align: center;
             }
             
@@ -755,6 +789,9 @@
     </style>
 </head>
 <body>
+    <!-- Анимация сердечек -->
+    <div class="pixel-hearts" id="pixel-hearts"></div>
+
     <!-- Эпичная загрузка -->
     <div class="preloader" id="preloader">
         <div class="loading-text">Погружаемся в мир ...</div>
@@ -801,17 +838,15 @@
                         </a>
                     </div>
                 </div>
-            </div>
-        </section>
-
-        <!-- Видео контейнер -->
-        <section id="content-container">
-            <video autoplay muted loop>
-                <source src="krasotka.mp4" type="video/mp4">
-                Ваш браузер не поддерживает видео тег.
-            </video>
-            <div class="video-overlay">
-                <h2 class="video-title">Лучшие моменты стримов</h2>
+                <div class="video-container fade-in delay-1">
+                    <video autoplay muted loop>
+                        <source src="krasotka.mp4" type="video/mp4">
+                        Ваш браузер не поддерживает видео тег.
+                    </video>
+                    <div class="video-overlay">
+                        <h2 class="video-title">Лучшие моменты стримов</h2>
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -878,21 +913,43 @@
 
         <!-- Футер -->
         <footer>
-            <div class="social-links">
-                <a href="https://www.twitch.tv/reessiqq"><i class="fab fa-twitch"></i></a>
-                <a href="#"><i class="fab fa-twitter"></i></a>
-                <a href="https://www.instagram.com/reessiqq/?igsh=MW5mMWQ4OWZoYW51bA%3D%3D"><i class="fab fa-instagram"></i></a>
-                <a href="#"><i class="fab fa-discord"></i></a>
-                <a href="https://www.tiktok.com/@rreessiq?_t=8rWLeTsSqS9&_r=1"><i class="fab fa-tiktok"></i></a>
-            </div>
             <p class="footer-text">© 2025 Reessiqq. Все права защищены.</p>
             <p class="footer-text">Сайт создан с любовью для фанатов</p>
         </footer>
     </div>
 
     <script>
+        // Создаем анимацию сердечек
+        function createHearts() {
+            const heartsContainer = document.getElementById('pixel-hearts');
+            const heartCount = 20;
+            
+            for (let i = 0; i < heartCount; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'pixel-heart';
+                
+                // Случайная позиция по горизонтали
+                heart.style.left = Math.random() * 100 + 'vw';
+                
+                // Случайная задержка анимации
+                heart.style.animationDelay = Math.random() * 5 + 's';
+                
+                // Случайный размер
+                const size = 8 + Math.random() * 16;
+                heart.style.width = size + 'px';
+                heart.style.height = size + 'px';
+                
+                // Для псевдоэлементов
+                heart.style.setProperty('--size', size + 'px');
+                
+                heartsContainer.appendChild(heart);
+            }
+        }
+
         // Эпичная загрузка
         document.addEventListener('DOMContentLoaded', function() {
+            createHearts();
+            
             const preloader = document.getElementById('preloader');
             const content = document.getElementById('content');
             
