@@ -318,6 +318,7 @@
             height: 2px;
             background: linear-gradient(90deg, var(--twitch-purple), var(--accent-pink));
             transition: width 0.3s;
+            transition: width 0.3s;
         }
 
         nav a:hover {
@@ -956,7 +957,7 @@
 
         <!-- Специальная благодарность -->
         <section class="special-thanks">
-            <h2 class="section-title">Особая благодарность</h2>
+            <h2 class="section-title" style="display: block; text-align: center; left: 0; transform: none;">Особая благодарность</h2>
             <p>Отдельное спасибо <span class="highlight">всем тем, кто решил финансово поддержать наши стримы</span>. Ваша помощь не останется незамеченной! Каждое пожертвование, большое или маленькое, помогает делать контент лучше и чаще.</p>
             <p>Благодаря вам я могу продолжать заниматься тем, что люблю, и радовать вас качественными трансляциями!</p>
         </section>
@@ -997,136 +998,295 @@
         }
         
         // Создаем частицы для прелоадера
-        function createPreloaderParticles() {
-            const container = document.getElementById('preloader-particles');
-            const count = 20;
+        function createPre createPreloaderParticlesloaderParticles() {
+            const() {
+            const container = document container = document.getElementById('.getElementById('preloader-particlespreloader-particles');
+           ');
+            const count =  const count = 20;
             
-            for (let i = 0; i < count; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'preloader-particle';
+           20;
+            
+            for ( for (let i = let i = 0; i < count0; i < count; i++) {
+               ; i++) {
+                const particle = document const particle = document.createElement('div.createElement('div');
+                particle');
+                particle.className =.className = ' 'preloader-particle';
+preloader-particle';
                 
-                // Случайные параметры
-                const size = Math.random() * 6 + 2;
-                const posX = Math.random() * 100;
-                const posY = Math.random() * 100;
-                const delay = Math.random() * 5;
-                const duration = Math.random() * 5 + 5;
+                // С                
+                // Случайлучайные параметры
+ные параметры
+                const                const size = Math.random() size = Math.random() * 5 * 5 +  + 3;
+                const posX3;
+                const posX = Math = Math.random().random() *  * 100;
+                const100;
+                const pos posY = Math.randomY = Math.random()() * 100;
+ * 100;
+                               const delay = const delay = Math.random() * 5 Math.random() * 5;
+                const duration =;
+                const duration = Math.random() *  Math.random() * 5 + 55 + 5;
+                
+                particle.style.width = `${size};
                 
                 particle.style.width = `${size}px`;
-                particle.style.height = `${size}px`;
-                particle.style.left = `${posX}%`;
-                particle.style.top = `${posY}%`;
-                particle.style.animationDelay = `${delay}s`;
+                particle.style.height =px`;
+                particle.style.height = `${size} `${size}px`;
+                particlepx`;
+                particle.style.style.left = `${posX.left = `${posX}%`;
+               }%`;
+                particle particle.style.top =.style.top = `${ `${posY}posY}%`;
+                particle.style.%`;
+                particle.style.animationanimationDelayDelay = `${delay}s`;
+                particle.style.animationDuration = `${ = `${delay}s`;
                 particle.style.animationDuration = `${duration}s`;
+duration}s`;
                 
-                // Случайный цвет из брендовой палитры
-                const colors = ['#9147ff', '#ff66c4', '#00c9ff'];
-                const randomColor = colors[Math.floor(Math.random() * colors.length)];
-                particle.style.background = randomColor;
-                
+                container.appendChild(                
                 container.appendChild(particle);
+           particle);
             }
         }
+ }
+        }
         
-        // Кастомный курсор
-        function initCustomCursor() {
-            const cursor = document.querySelector('.cursor');
-            const follower = document.querySelector('.cursor-follower');
+        
+        // Ка        // Кастомстомный курсорный курсор
+        function
+        function initCursor() initCursor() {
+            {
+            const cursor const cursor = document = document.querySelector('.cursor');
+           .querySelector('.cursor');
+            const cursorFollower = const cursorFollower = document document.querySelector('.cursor.querySelector('.cursor-follower');
             
-            document.addEventListener('mousemove', function(e) {
-                cursor.style.left = e.clientX + 'px';
-                cursor.style.top = e.clientY + 'px';
+           -follower');
+            
+            document document.addEventListener('m.addEventListener('mousousemove', functionemove', function(e(e) {
+                cursor.style) {
+                cursor.style.left = e.client.left = e.clientX + 'px';
+X + 'px';
+                cursor.style                cursor.style.top =.top = e.clientY + e.clientY + ' 'px';
                 
-                // Задержка для курсора-фолловера для плавности
-                setTimeout(function() {
-                    follower.style.left = e.clientX + 'px';
-                    follower.style.top = e.clientY + 'px';
+px';
+                
+                //                // Задер Задержкажка для курс для курсора-фолловора-фолловера для плавера для плавности
+ности
+                               setTimeout(function setTimeout(function() {
+() {
+                    cursorFollower                    cursorFollower.style.left.style.left = e = e.clientX.clientX + 'px + 'px';
+                   ';
+                    cursorFollower.style cursorFollower.style.top.top = e.clientY = e.clientY + + 'px';
                 }, 100);
             });
             
-            // Эффекты при наведении на интерактивные элементы
-            const hoverElements = document.querySelectorAll('a, button, .donators-table tr');
+            // 'px';
+                }, 100);
+            });
             
-            hoverElements.forEach(el => {
-                el.addEventListener('mouseenter', () => {
+            // Эффек Эффекты приты навед при наведении на ссыении на ссылки и кнопкилки и кнопки
+
+                       const hoverElements = document.querySelectorAll(' const hoverElements = document.querySelectorAll('a, button,a, button, . .btn,btn, .donators .donators-table tr');
+-table tr');
+            
+            hoverElements.forEach            
+            hoverElements.forEach(el =>(el => {
+                el.addEventListener {
+                el.addEventListener('mouseenter',('mouseenter', () () => {
+                    cursor.classList => {
                     cursor.classList.add('hover');
-                    follower.classList.add('hover');
-                });
+.add('hover');
+                    cursor                    cursorFollower.classListFollower.classList.add.add('hover');
+('hover');
+                               });
                 
-                el.addEventListener('mouseleave', () => {
-                    cursor.classList.remove('hover');
-                    follower.classList.remove('hover');
+                el.addEventListener });
+                
+                el.addEventListener('('mouseleave', () => {
+mouseleave', () => {
+                    cursor.classList.remove                    cursor.classList.remove('('hover');
+                    cursorFhover');
+                    cursorFollowerollower.classList.remove('hover.classList.remove('hover');
+');
                 });
+                           });
             });
             
-            // Эффект при клике
-            document.addEventListener('mousedown', () => {
+            // Э });
+            
+            // Эффекффект клит клика
+ка
+            document.addEventListener('            document.addEventListener('mmousedown',ousedown', () => {
+                cursor.classList () => {
                 cursor.classList.add('click');
-                follower.classList.add('click');
+.add('click');
+                               cursorFollower.classList.add cursorFollower.classList.add('click');
+           ('click');
             });
             
-            document.addEventListener('mouseup', () => {
-                cursor.classList.remove('click');
-                follower.classList.remove('click');
+            document.addEventListener(' });
+            
+            document.addEventListener('mouseupmouseup', ()', () => {
+                cursor => {
+                cursor.classList.remove.classList.remove('click');
+               ('click');
+                cursorFollower.classList.remove('click');
+            });
+        }
+ cursorFollower.classList.remove('click');
             });
         }
         
-        // Показ контента после загрузки
-        function showContent() {
-            const preloader = document.getElementById('preloader');
-            const content = document.getElementById('content');
-            const loadingComplete = document.getElementById('loading-complete');
+        
+        //        // Пока Показываем сообщениезываем сообщение о завершении за о завершении загрузки
+        functionгрузки
+        function show showLoadingComplete() {
+           LoadingComplete() {
+            const const loadingComplete = document.getElementById loadingComplete = document.getElementById('('loading-complete');
+            loadingloading-complete');
+            loadingComplete.classList.add('show');
+        }
+Complete.classList.add('show');
+        }
+        
+        // Скры        
+        // Скрываем прелоадерваем прелоадер и показываем конт и показываем коненттент
+        function
+        function hidePreloader() hidePreloader() {
+            const pre {
+            const preloader =loader = document.getElementById('pre document.getElementById('preloader');
+            constloader');
+            const content = content = document.getElementById(' document.getElementById('contentcontent');
             
-            // Показываем сообщение о завершении загрузки
-            setTimeout(() => {
-                loadingComplete.classList.add('show');
-            }, 3000);
+            //');
             
-            // Скрываем прелоадер и показываем контент
+            // Показыва Показываем сообщение о заверем сообщение о завершении зашении загрузки
+           грузки
+            show showLoadingComplete();
+            
+LoadingComplete();
+            
+                       // Ждем // Ждем немного перед ск немного перед скрырытием прелоадератием прелоадера
+            setTimeout(()
             setTimeout(() => {
-                preloader.style.opacity = '0';
+                pre => {
+                preloader.style.opacity = 'loader.style.opacity = '0';
                 
+               0';
+                
+                // // После завер После завершенияшения анимации скрытия
+                setTimeout анимации скрытия
                 setTimeout(() => {
-                    preloader.style.display = 'none';
-                    content.style.display = 'block';
+                   (() => {
+                    pre preloader.style.display = 'loader.style.display = 'none';
+none';
+                    content.style.display = '                    content.style.display = 'block';
+block';
                     
-                    // Показываем контент с анимацией
-                    setTimeout(() => {
-                        content.style.opacity = '1';
-                    }, 100);
-                    
-                    // Инициализируем кастомный курсор
-                    initCustomCursor();
+                    // П                    
+                    // Показываем коноказываем контент стент с плавным плавным появлением появлением
+
+                    setTimeout(() =>                    setTimeout(() => {
+ {
+                        content.style.opacity                        content.style.opacity = '1';
+ = '1';
+                    },                    },  100);
+               100);
                 }, 800);
-            }, 4000);
+            }, 800);
+            }, 1500);
+        }, 1500);
         }
         
-        // Запуск при загрузке страницы
-        window.addEventListener('load', function() {
-            createParticles();
-            createPreloaderParticles();
-            showContent();
+        // Инициализация при }
+        
+        // Инициализация при за загрузке страницы
+        windowгрузке страницы
+        window.addEventListener('load.addEventListener('load', function() {
+            //', function() {
+            // Созда Создаем частицы
+ем частицы
+            create            createParticles();
+Particles();
+                       createPre createPreloaderloaderParticles();
             
-            // Эффект скролла для хедера
-            const header = document.getElementById('header');
-            window.addEventListener('scroll', () => {
-                if (window.scrollY > 50) {
-                    header.classList.add('scrolled');
+            //Particles();
+            
+            // И Инициализируемнициализируем кастомный курс кастомный курсор
+            initCursorор
+            initCursor();
+();
+            
+            // С            
+            // Скрываем прелокрываем прелоадерадер после загрузки после загрузки
+            hidePreloader
+            hidePreloader();
+            
+            //();
+            
+            // Э Эффект поффект появления элементовявления элементов при ск при скролле
+ролле
+            const fadeElements = document            const fadeElements = document.querySelector.querySelectorAll('.fadeAll('.fade-in-in');
+            
+');
+            
+            function            function checkFade() {
+                checkFade() {
+                fadeElements.forEach(element fadeElements.forEach(element => {
+                    => {
+                    const elementTop const elementTop = element.getB = element.getBoundingClientRect().oundingClientRect().top;
+                    const elementBottomtop;
+                    const elementBottom = element.getBoundingClientRect().bottom;
+                    
+                    // Если = element.getBoundingClientRect().bottom;
+                    
+                    // Если элемент виден элемент виден в view в viewport
+port
+                    if                    if (element (elementTop < window.innerTop < window.innerHeightHeight - 100 && element - 100 && elementBottom >Bottom > 0) 0) {
+                        element {
+                        element.style.op.style.opacity =acity = '1';
+                        '1';
+                        element.style element.style.transform =.transform = 'translateY(0 'translateY(0)';
+                    }
+                });
+)';
+                    }
+                });
+                       }
+            
+            // Проверяем при }
+            
+            // Проверяем при загрузке и при ск загрузке и при скрролле
+олле
+                       check checkFFade();
+            window.addEventListener('scrollade();
+            window.addEventListener('scroll',', checkFade);
+ checkFade);
+            
+            //            
+            // Эффек Эффект изменения хедерат изменения хедера при при скр скролле
+            const headerолле
+            const header = = document.getElementById('header document.getElementById('header');
+            
+            window.addEventListener');
+            
+            window.addEventListener('scroll', function('scroll', function()() {
+                if {
+                if ( (window.scrollY >window.scrollY > 50) {
+ 50) {
+                    header.classList                    header.classList.add.add('scrolled('scrolled');
+                } else {
+                    header');
                 } else {
                     header.classList.remove('scrolled');
+.classList.remove('scrolled');
                 }
             });
-            
-            // Анимация появления строк таблицы
-            setTimeout(() => {
-                const rows = document.querySelectorAll('.donators-table tr');
-                rows.forEach((row, index) => {
-                    setTimeout(() => {
-                        row.classList.add('fade-in');
-                    }, index * 50);
-                });
-            }, 4500);
+                }
+            });
         });
-    </script>
+           });
+    </ </script>
 </body>
+script>
+</body>
+</html>
 </html>
