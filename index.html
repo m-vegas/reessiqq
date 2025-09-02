@@ -504,6 +504,7 @@
             aspect-ratio: 16/9;
             transition: all 0.5s;
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            cursor: pointer;
         }
 
         .gallery-item img {
@@ -619,6 +620,91 @@
         .delay-3 { animation-delay: 0.6s; }
         .delay-4 { animation-delay: 0.8s; }
 
+        /* Модальное окно для просмотра фотографий */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            position: relative;
+            max-width: 90%;
+            max-height: 90%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-image {
+            max-width: 100%;
+            max-height: 90vh;
+            border-radius: 10px;
+            box-shadow: 0 0 30px rgba(145, 71, 255, 0.5);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: -40px;
+            right: -40px;
+            color: white;
+            font-size: 40px;
+            cursor: pointer;
+            transition: all 0.3s;
+            z-index: 1001;
+        }
+
+        .modal-close:hover {
+            color: var(--accent-pink);
+            transform: scale(1.1);
+        }
+
+        .modal-nav {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 20px;
+            transform: translateY(-50%);
+            z-index: 1001;
+        }
+
+        .modal-nav-btn {
+            background: rgba(145, 71, 255, 0.5);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+        }
+
+        .modal-nav-btn:hover {
+            background: var(--twitch-purple);
+            transform: scale(1.1);
+        }
+
         /* Адаптивность */
         @media (max-width: 1200px) {
             .hero-title {
@@ -683,6 +769,18 @@
             section {
                 padding: 60px 20px;
             }
+            
+            .modal-close {
+                top: -30px;
+                right: 0;
+                font-size: 30px;
+            }
+            
+            .modal-nav-btn {
+                width: 40px;
+                height: 40px;
+                font-size: 20px;
+            }
         }
 
         @media (max-width: 576px) {
@@ -710,6 +808,16 @@
             .logo-text {
                 display: none;
             }
+            
+            .modal-nav {
+                padding: 0 10px;
+            }
+            
+            .modal-nav-btn {
+                width: 35px;
+                height: 35px;
+                font-size: 18px;
+            }
         }
     </style>
 </head>
@@ -725,6 +833,18 @@
             <div class="loading-bar"></div>
         </div>
         <div class="loading-complete" id="loading-complete">ГОТОВО!</div>
+    </div>
+
+    <!-- Модальное окно для просмотра фотографий -->
+    <div class="modal-overlay" id="image-modal">
+        <div class="modal-content">
+            <span class="modal-close" id="modal-close">&times;</span>
+            <img class="modal-image" id="modal-image" src="" alt="">
+            <div class="modal-nav">
+                <button class="modal-nav-btn" id="prev-btn"><i class="fas fa-chevron-left"></i></button>
+                <button class="modal-nav-btn" id="next-btn"><i class="fas fa-chevron-right"></i></button>
+            </div>
+        </div>
     </div>
 
     <!-- Основной контент -->
@@ -882,6 +1002,39 @@
             document.head.appendChild(style);
         }
 
+        // Функции для работы с модальным окном
+        let currentImageIndex = 0;
+        let galleryImages = [];
+
+        function openModal(index) {
+            currentImageIndex = index;
+            const modal = document.getElementById('image-modal');
+            const modalImage = document.getElementById('modal-image');
+            
+            modalImage.src = galleryImages[currentImageIndex].img;
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('image-modal');
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        function navigateModal(direction) {
+            currentImageIndex += direction;
+            
+            if (currentImageIndex < 0) {
+                currentImageIndex = galleryImages.length - 1;
+            } else if (currentImageIndex >= galleryImages.length) {
+                currentImageIndex = 0;
+            }
+            
+            const modalImage = document.getElementById('modal-image');
+            modalImage.src = galleryImages[currentImageIndex].img;
+        }
+
         // Улучшенный прелоадер
         document.addEventListener('DOMContentLoaded', function() {
             createParticles();
@@ -923,26 +1076,50 @@
             }, 3000);
 
             // Заполняем галерею
-            const galleryData = [
+            galleryImages = [
                 { img: 'https://i.ibb.co/kg95nwJw/panel-1191674226-image-b91f9a0e-37f1-4585-a688-8a847188fb97.jpg' },
                 { img: 'https://i.ibb.co/HTkp8C6P/9331d8ea-3304-42d4-9955-835b6f4b31b7.jpg' },
                 { img: 'https://i.ibb.co/7dbgkjJv/96f8340b-034a-402b-b4ae-519317162441.jpg' },
                 { img: 'https://i.ibb.co/7xYRVL71/5573218e-5453-4a01-8a99-e993ce75928b.jpg' },
-                { img: 'https://i.ibb.co/hJwDxPTp/989388f8-33a3-43c7-b227-10b21ff627f7.jpg' },
-                { img: 'https://i.ibb.co/3yccyTP4/aa501d0b-f0c8-4e35-833c-27460e53217c.jpg' }
+                { img: 'https://i.ibb.co/5jR8v7y0/167788fb-2efb-4976-a6f5-589587277160-profile-image-300x300.jpg' },
+                { img: 'https://i.ibb.co/7JZZSRYZ/photo-2025-03-15-23-15-32.jpg' }
             ];
 
             const galleryGrid = document.getElementById('gallery-grid');
-            galleryData.forEach(item => {
+            
+            galleryImages.forEach((image, index) => {
                 const galleryItem = document.createElement('div');
                 galleryItem.className = 'gallery-item fade-in';
+                galleryItem.style.animationDelay = `${0.1 * index}s`;
+                
                 galleryItem.innerHTML = `
-                    <img src="${item.img}" alt="Stream moment">
+                    <img src="${image.img}" alt="Gallery image ${index + 1}">
                 `;
+                
+                galleryItem.addEventListener('click', () => openModal(index));
                 galleryGrid.appendChild(galleryItem);
             });
 
-            // Скролл хедера
+            // Настройка модального окна
+            document.getElementById('modal-close').addEventListener('click', closeModal);
+            document.getElementById('prev-btn').addEventListener('click', () => navigateModal(-1));
+            document.getElementById('next-btn').addEventListener('click', () => navigateModal(1));
+            
+            // Закрытие модального окна по клику на оверлей
+            document.getElementById('image-modal').addEventListener('click', function(e) {
+                if (e.target === this) {
+                    closeModal();
+                }
+            });
+
+            // Закрытие модального окна по клавише Escape
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    closeModal();
+                }
+            });
+
+            // Эффект скролла для хедера
             window.addEventListener('scroll', function() {
                 const header = document.getElementById('header');
                 if (window.scrollY > 50) {
