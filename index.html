@@ -974,7 +974,7 @@
                     <li><a href="#about">Обо мне</a></li>
                     <li><a href="#gallery">Галерея</a></li>
                     <li><a href="#donate">Поддержать</a></li>
-                    <li><a href="index2.html">Топ Донатеры</a></li>
+                    <li><a href="index2.html" class="external-link">Топ Донатеры</a></li>
                 </ul>
             </nav>
         </header>
@@ -1099,16 +1099,20 @@
                 particle.style.animation = `float ${duration}s infinite ease-in-out`;
                 particle.style.animationDelay = `${Math.random() * 5}s`;
                 
+                // Случайный цвет
+                const colors = ['rgba(145, 71, 255, 0.5)', 'rgba(255, 102, 196, 0.5)', 'rgba(0, 201, 255, 0.5)'];
+                particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+                
                 particlesContainer.appendChild(particle);
             }
         }
-        
+
         // Создаем частицы для прелоадера
         function createPreloaderParticles() {
-            const particlesContainer = document.getElementById('preloader-particles');
-            const particleCount = 20;
+            const container = document.getElementById('preloader-particles');
+            const count = 20;
             
-            for (let i = 0; i < particleCount; i++) {
+            for (let i = 0; i < count; i++) {
                 const particle = document.createElement('div');
                 particle.className = 'preloader-particle';
                 
@@ -1119,31 +1123,42 @@
                 particle.style.left = `${posX}%`;
                 particle.style.top = `${posY}%`;
                 
-                // Случайная задержка анимации
-                particle.style.animationDelay = `${Math.random() * 5}s`;
+                // Случайная анимация
+                const duration = Math.random() * 5 + 3;
+                particle.style.animation = `float ${duration}s infinite ease-in-out`;
+                particle.style.animationDelay = `${Math.random() * 2}s`;
                 
-                particlesContainer.appendChild(particle);
+                // Случайный размер
+                const size = Math.random() * 6 + 4;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                
+                // Случайный цвет
+                const colors = ['#9147ff', '#ff66c4', '#00c9ff'];
+                particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+                
+                container.appendChild(particle);
             }
         }
-        
+
         // Кастомный курсор
         function initCustomCursor() {
             const cursor = document.querySelector('.cursor');
             const cursorFollower = document.querySelector('.cursor-follower');
             
-            document.addEventListener('mousemove', function(e) {
+            document.addEventListener('mousemove', (e) => {
                 cursor.style.left = e.clientX + 'px';
                 cursor.style.top = e.clientY + 'px';
                 
-                // Задержка для курсора-фолловера для плавности
-                setTimeout(function() {
+                // Задержка для follower для плавности
+                setTimeout(() => {
                     cursorFollower.style.left = e.clientX + 'px';
                     cursorFollower.style.top = e.clientY + 'px';
                 }, 100);
             });
             
             // Эффекты при наведении на кликабельные элементы
-            const clickables = document.querySelectorAll('a, button, .gallery-item, .modal-nav-btn');
+            const clickables = document.querySelectorAll('a, button, .gallery-item, .method, .logo, nav a');
             
             clickables.forEach(item => {
                 item.addEventListener('mouseenter', () => {
@@ -1167,17 +1182,12 @@
                 });
             });
         }
-        
-        // Инициализация галереи
+
+        // Заполнение галереи
         function initGallery() {
             const galleryGrid = document.getElementById('gallery-grid');
-            const imageModal = document.getElementById('image-modal');
-            const modalImage = document.getElementById('modal-image');
-            const modalClose = document.getElementById('modal-close');
-            const prevBtn = document.getElementById('prev-btn');
-            const nextBtn = document.getElementById('next-btn');
             
-            // Массив с URL изображений
+            // Массив с путями к изображениям
             const images = [
                 'https://i.ibb.co/kg95nwJw/panel-1191674226-image-b91f9a0e-37f1-4585-a688-8a847188fb97.jpg',
                 'https://i.ibb.co/HTkp8C6P/9331d8ea-3304-42d4-9955-835b6f4b31b7.jpg',
@@ -1186,159 +1196,170 @@
                 'https://i.ibb.co/hJwDxPTp/989388f8-33a3-43c7-b227-10b21ff627f7.jpg',
                 'https://i.ibb.co/3yccyTP4/aa501d0b-f0c8-4e35-833c-27460e53217c.jpg'
             ];
+            
             // Создаем элементы галереи
-            images.forEach((imgSrc, index) => {
-                const galleryItem = document.createElement('div');
-                galleryItem.className = 'gallery-item fade-in';
-                galleryItem.style.animationDelay = `${index * 0.1}s`;
+            images.forEach((src, index) => {
+                const item = document.createElement('div');
+                item.className = 'gallery-item fade-in';
+                item.style.animationDelay = `${0.1 * index}s`;
                 
                 const img = document.createElement('img');
-                img.src = imgSrc;
-                img.alt = `Reessiqq image ${index + 1}`;
+                img.src = src;
+                img.alt = `Reessiqq photo ${index + 1}`;
+                img.dataset.index = index;
                 
-                galleryItem.appendChild(img);
-                galleryGrid.appendChild(galleryItem);
+                item.appendChild(img);
+                galleryGrid.appendChild(item);
                 
-                // Открытие модального окна при клике
-                galleryItem.addEventListener('click', () => {
-                    modalImage.src = imgSrc;
-                    imageModal.classList.add('active');
-                    
-                    // Устанавливаем текущий индекс изображения
-                    currentImageIndex = index;
+                // Добавляем обработчик для модального окна
+                item.addEventListener('click', () => {
+                    openModal(index);
                 });
             });
+        }
+
+        // Модальное окно для фотографий
+        function initModal() {
+            const modal = document.getElementById('image-modal');
+            const modalImage = document.getElementById('modal-image');
+            const closeBtn = document.getElementById('modal-close');
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
             
-            // Закрытие модального окна
-            modalClose.addEventListener('click', () => {
-                imageModal.classList.remove('active');
-            });
+            let currentIndex = 0;
+            const images = document.querySelectorAll('.gallery-item img');
+            const imageSources = Array.from(images).map(img => img.src);
             
-            // Закрытие по клику вне изображения
-            imageModal.addEventListener('click', (e) => {
-                if (e.target === imageModal) {
-                    imageModal.classList.remove('active');
+            function openModal(index) {
+                currentIndex = index;
+                modalImage.src = imageSources[currentIndex];
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+            
+            function closeModal() {
+                modal.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+            
+            function showNext() {
+                currentIndex = (currentIndex + 1) % imageSources.length;
+                modalImage.src = imageSources[currentIndex];
+            }
+            
+            function showPrev() {
+                currentIndex = (currentIndex - 1 + imageSources.length) % imageSources.length;
+                modalImage.src = imageSources[currentIndex];
+            }
+            
+            // Обработчики событий
+            closeBtn.addEventListener('click', closeModal);
+            prevBtn.addEventListener('click', showPrev);
+            nextBtn.addEventListener('click', showNext);
+            
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    closeModal();
                 }
             });
             
-            // Навигация по изображениям
-            let currentImageIndex = 0;
-            
-            prevBtn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
-                modalImage.src = images[currentImageIndex];
-            });
-            
-            nextBtn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                currentImageIndex = (currentImageIndex + 1) % images.length;
-                modalImage.src = images[currentImageIndex];
-            });
-            
-            // Навигация с помощью клавиатуры
+            // Навигация с клавиатуры
             document.addEventListener('keydown', (e) => {
-                if (imageModal.classList.contains('active')) {
-                    if (e.key === 'ArrowLeft') {
-                        currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
-                        modalImage.src = images[currentImageIndex];
-                    } else if (e.key === 'ArrowRight') {
-                        currentImageIndex = (currentImageIndex + 1) % images.length;
-                        modalImage.src = images[currentImageIndex];
-                    } else if (e.key === 'Escape') {
-                        imageModal.classList.remove('active');
-                    }
+                if (modal.classList.contains('active')) {
+                    if (e.key === 'Escape') closeModal();
+                    if (e.key === 'ArrowRight') showNext();
+                    if (e.key === 'ArrowLeft') showPrev();
                 }
             });
         }
-        
+
         // Плавная прокрутка для навигации
-        function initSmoothScrolling() {
-            document.querySelectorAll('nav a').forEach(anchor => {
+        function initSmoothScroll() {
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 anchor.addEventListener('click', function(e) {
+                    if (this.classList.contains('external-link')) return;
+                    
                     e.preventDefault();
                     
                     const targetId = this.getAttribute('href');
-                    if (targetId.startsWith('#')) {
-                        const targetElement = document.querySelector(targetId);
-                        
-                        if (targetElement) {
-                            window.scrollTo({
-                                top: targetElement.offsetTop - 80,
-                                behavior: 'smooth'
-                            });
-                        }
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        targetElement.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
                     }
                 });
             });
         }
-        
+
         // Эффект появления элементов при скролле
         function initScrollAnimations() {
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('fade-in');
+                        observer.unobserve(entry.target);
                     }
                 });
             }, {
                 threshold: 0.1
             });
             
-            document.querySelectorAll('.method, .gallery-item').forEach(el => {
+            document.querySelectorAll('.fade-in').forEach(el => {
                 observer.observe(el);
             });
         }
-        
-        // Обработка загрузки страницы
-        window.addEventListener('load', function() {
-            // Создаем эффекты
-            createParticles();
-            createPreloaderParticles();
+
+        // Обработка скролла для хедера
+        function initHeaderScroll() {
+            const header = document.getElementById('header');
             
-            // Инициализация кастомного курсора
-            initCustomCursor();
-            
-            // Инициализация галереи
-            initGallery();
-            
-            // Плавная прокрутка
-            initSmoothScrolling();
-            
-            // Анимации при скролле
-            initScrollAnimations();
-            
-            // Показываем сообщение о завершении загрузки
-            setTimeout(() => {
-                document.getElementById('loading-complete').classList.add('show');
-            }, 3000);
-            
-            // Скрываем прелоадер и показываем контент
-            setTimeout(() => {
-                const preloader = document.getElementById('preloader');
-                const content = document.getElementById('content');
-                
-                preloader.style.opacity = '0';
-                
-                setTimeout(() => {
-                    preloader.style.display = 'none';
-                    content.style.display = 'block';
-                    
-                    setTimeout(() => {
-                        content.style.opacity = '1';
-                    }, 100);
-                }, 800);
-            }, 4000);
-            
-            // Эффект скролла для хедера
-            window.addEventListener('scroll', function() {
-                const header = document.getElementById('header');
-                if (window.scrollY > 50) {
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 100) {
                     header.classList.add('scrolled');
                 } else {
                     header.classList.remove('scrolled');
                 }
             });
+        }
+
+        // Инициализация прелоадера
+        function initPreloader() {
+            const preloader = document.getElementById('preloader');
+            const content = document.getElementById('content');
+            const loadingComplete = document.getElementById('loading-complete');
+            
+            // Симулируем загрузку
+            setTimeout(() => {
+                loadingComplete.classList.add('show');
+            }, 2500);
+            
+            setTimeout(() => {
+                preloader.style.opacity = '0';
+                setTimeout(() => {
+                    preloader.style.display = 'none';
+                    content.style.display = 'block';
+                    setTimeout(() => {
+                        content.style.opacity = '1';
+                    }, 50);
+                }, 800);
+            }, 3500);
+        }
+
+        // Основная инициализация
+        document.addEventListener('DOMContentLoaded', () => {
+            createParticles();
+            createPreloaderParticles();
+            initCustomCursor();
+            initGallery();
+            initModal();
+            initSmoothScroll();
+            initScrollAnimations();
+            initHeaderScroll();
+            initPreloader();
         });
     </script>
 </body>
