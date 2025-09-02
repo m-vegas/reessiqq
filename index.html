@@ -318,6 +318,7 @@
             height: 2px;
             background: linear-gradient(90deg, var(--twitch-purple), var(--accent-pink));
             transition: width 0.3s;
+            z-index: -1;
         }
 
         nav a:hover {
@@ -973,6 +974,7 @@
                     <li><a href="#about">Обо мне</a></li>
                     <li><a href="#gallery">Галерея</a></li>
                     <li><a href="#donate">Поддержать</a></li>
+                    <li><a href="index2.html">Топ Донатеры</a></li>
                 </ul>
             </nav>
         </header>
@@ -1052,7 +1054,7 @@
                     </div>
                     <h3>Boosty</h3>
                     <p>Подписка с эксклюзивным контентом и бонусами для подписчиков</p>
-                    <a href="https://ibb.co/7JZZSRYZ" class="btn btn-primary">Подписаться</a>
+                    <a href="https://boosty.to/reessiqq" class="btn btn-primary">Подписаться</a>
                 </div>
                 <div class="method fade-in delay-2">
                     <div class="method-icon">
@@ -1082,19 +1084,20 @@
                 const particle = document.createElement('div');
                 particle.className = 'particle';
                 
-                // Случайные параметры частицы
-                const size = Math.random() * 5 + 2;
+                // Случайные размеры и позиции
+                const size = Math.random() * 10 + 2;
                 const posX = Math.random() * 100;
                 const posY = Math.random() * 100;
-                const delay = Math.random() * 10;
-                const duration = Math.random() * 10 + 10;
                 
                 particle.style.width = `${size}px`;
                 particle.style.height = `${size}px`;
                 particle.style.left = `${posX}%`;
                 particle.style.top = `${posY}%`;
-                particle.style.animationDelay = `${delay}s`;
-                particle.style.animationDuration = `${duration}s`;
+                
+                // Случайная анимация
+                const duration = Math.random() * 20 + 10;
+                particle.style.animation = `float ${duration}s infinite ease-in-out`;
+                particle.style.animationDelay = `${Math.random() * 5}s`;
                 
                 particlesContainer.appendChild(particle);
             }
@@ -1102,40 +1105,31 @@
         
         // Создаем частицы для прелоадера
         function createPreloaderParticles() {
-            const container = document.getElementById('preloader-particles');
-            const count = 20;
+            const particlesContainer = document.getElementById('preloader-particles');
+            const particleCount = 20;
             
-            for (let i = 0; i < count; i++) {
+            for (let i = 0; i < particleCount; i++) {
                 const particle = document.createElement('div');
                 particle.className = 'preloader-particle';
                 
-                // Случайные параметры
-                const size = Math.random() * 6 + 2;
+                // Случайные позиции
                 const posX = Math.random() * 100;
                 const posY = Math.random() * 100;
-                const delay = Math.random() * 5;
-                const duration = Math.random() * 5 + 5;
                 
-                particle.style.width = `${size}px`;
-                particle.style.height = `${size}px`;
                 particle.style.left = `${posX}%`;
                 particle.style.top = `${posY}%`;
-                particle.style.animationDelay = `${delay}s`;
-                particle.style.animationDuration = `${duration}s`;
                 
-                // Случайный цвет из брендовой палитры
-                const colors = ['#9147ff', '#ff66c4', '#00c9ff'];
-                const randomColor = colors[Math.floor(Math.random() * colors.length)];
-                particle.style.background = randomColor;
+                // Случайная задержка анимации
+                particle.style.animationDelay = `${Math.random() * 5}s`;
                 
-                container.appendChild(particle);
+                particlesContainer.appendChild(particle);
             }
         }
         
         // Кастомный курсор
         function initCustomCursor() {
             const cursor = document.querySelector('.cursor');
-            const follower = document.querySelector('.cursor-follower');
+            const cursorFollower = document.querySelector('.cursor-follower');
             
             document.addEventListener('mousemove', function(e) {
                 cursor.style.left = e.clientX + 'px';
@@ -1143,124 +1137,203 @@
                 
                 // Задержка для курсора-фолловера для плавности
                 setTimeout(function() {
-                    follower.style.left = e.clientX + 'px';
-                    follower.style.top = e.clientY + 'px';
+                    cursorFollower.style.left = e.clientX + 'px';
+                    cursorFollower.style.top = e.clientY + 'px';
                 }, 100);
             });
             
-            // Эффекты при наведении на интерактивные элементы
-            const hoverElements = document.querySelectorAll('a, button, .gallery-item, .method, .logo, nav a');
+            // Эффекты при наведении на кликабельные элементы
+            const clickables = document.querySelectorAll('a, button, .gallery-item, .modal-nav-btn');
             
-            hoverElements.forEach(el => {
-                el.addEventListener('mouseenter', () => {
+            clickables.forEach(item => {
+                item.addEventListener('mouseenter', () => {
                     cursor.classList.add('hover');
-                    follower.classList.add('hover');
+                    cursorFollower.classList.add('hover');
                 });
                 
-                el.addEventListener('mouseleave', () => {
+                item.addEventListener('mouseleave', () => {
                     cursor.classList.remove('hover');
-                    follower.classList.remove('hover');
+                    cursorFollower.classList.remove('hover');
                 });
-            });
-            
-            // Эффект при клике
-            document.addEventListener('mousedown', () => {
-                cursor.classList.add('click');
-                follower.classList.add('click');
-            });
-            
-            document.addEventListener('mouseup', () => {
-                cursor.classList.remove('click');
-                follower.classList.remove('click');
+                
+                item.addEventListener('mousedown', () => {
+                    cursor.classList.add('click');
+                    cursorFollower.classList.add('click');
+                });
+                
+                item.addEventListener('mouseup', () => {
+                    cursor.classList.remove('click');
+                    cursorFollower.classList.remove('click');
+                });
             });
         }
         
-        // Заполнение галереи
+        // Инициализация галереи
         function initGallery() {
             const galleryGrid = document.getElementById('gallery-grid');
-            const imageUrls = [
-                'https://i.ibb.co/kg95nwJw/panel-1191674226-image-b91f9a0e-37f1-4585-a688-8a847188fb97.jpg',
-                'https://i.ibb.co/HTkp8C6P/9331d8ea-3304-42d4-9955-835b6f4b31b7.jpg',
-                'https://i.ibb.co/7dbgkjJv/96f8340b-034a-402b-b4ae-519317162441.jpg',
-                'https://i.ibb.co/7xYRVL71/5573218e-5453-4a01-8a99-e993ce75928b.jpg',
-                'https://i.ibb.co/hJwDxPTp/989388f8-33a3-43c7-b227-10b21ff627f7.jpg',
-                'https://i.ibb.co/3yccyTP4/aa501d0b-f0c8-4e35-833c-27460e53217c.jpg'
+            const imageModal = document.getElementById('image-modal');
+            const modalImage = document.getElementById('modal-image');
+            const modalClose = document.getElementById('modal-close');
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+            
+            // Массив с URL изображений
+            const images = [
+                'https://static-cdn.jtvnw.net/jtv_user_pictures/167788fb-2efb-4976-a6f5-589587277160-profile_image-300x300.png',
+                'https://static-cdn.jtvnw.net/jtv_user_pictures/1a7b7d8f-0c7c-4c0a-9c0f-8e5b5e5b5e5b-profile_image-300x300.png',
+                'https://static-cdn.jtvnw.net/jtv_user_pictures/2b3b3b3b-3b3b-3b3b-3b3b-3b3b3b3b3b3b-profile_image-300x300.png',
+                'https://static-cdn.jtvnw.net/jtv_user_pictures/3c3c3c3c-3c3c-3c3c-3c3c-3c3c3c3c3c3c-profile_image-300x300.png',
+                'https://static-cdn.jtvnw.net/jtv_user_pictures/4d4d4d4d-4d4d-4d4d-4d4d-4d4d4d4d4d4d-profile_image-300x300.png',
+                'https://static-cdn.jtvnw.net/jtv_user_pictures/5e5e5e5e-5e5e-5e5e-5e5e-5e5e5e5e5e5e-profile_image-300x300.png'
             ];
             
-            imageUrls.forEach(url => {
-                const item = document.createElement('div');
-                item.className = 'gallery-item fade-in';
-                item.innerHTML = `<img src="${url}" alt="Reessiqq">`;
-                galleryGrid.appendChild(item);
+            // Создаем элементы галереи
+            images.forEach((imgSrc, index) => {
+                const galleryItem = document.createElement('div');
+                galleryItem.className = 'gallery-item fade-in';
+                galleryItem.style.animationDelay = `${index * 0.1}s`;
                 
-                // Открытие изображения в модальном окне
-                item.addEventListener('click', () => {
-                    const modal = document.getElementById('image-modal');
-                    const modalImage = document.getElementById('modal-image');
+                const img = document.createElement('img');
+                img.src = imgSrc;
+                img.alt = `Reessiqq image ${index + 1}`;
+                
+                galleryItem.appendChild(img);
+                galleryGrid.appendChild(galleryItem);
+                
+                // Открытие модального окна при клике
+                galleryItem.addEventListener('click', () => {
+                    modalImage.src = imgSrc;
+                    imageModal.classList.add('active');
                     
-                    modalImage.src = url;
-                    modal.classList.add('active');
+                    // Устанавливаем текущий индекс изображения
+                    currentImageIndex = index;
                 });
             });
-        }
-        
-        // Инициализация модального окна
-        function initModal() {
-            const modal = document.getElementById('image-modal');
-            const closeBtn = document.getElementById('modal-close');
             
-            closeBtn.addEventListener('click', () => {
-                modal.classList.remove('active');
+            // Закрытие модального окна
+            modalClose.addEventListener('click', () => {
+                imageModal.classList.remove('active');
             });
             
-            modal.addEventListener('click', (e) => {
-                if (e.target === modal) {
-                    modal.classList.remove('active');
+            // Закрытие по клику вне изображения
+            imageModal.addEventListener('click', (e) => {
+                if (e.target === imageModal) {
+                    imageModal.classList.remove('active');
+                }
+            });
+            
+            // Навигация по изображениям
+            let currentImageIndex = 0;
+            
+            prevBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
+                modalImage.src = images[currentImageIndex];
+            });
+            
+            nextBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                currentImageIndex = (currentImageIndex + 1) % images.length;
+                modalImage.src = images[currentImageIndex];
+            });
+            
+            // Навигация с помощью клавиатуры
+            document.addEventListener('keydown', (e) => {
+                if (imageModal.classList.contains('active')) {
+                    if (e.key === 'ArrowLeft') {
+                        currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
+                        modalImage.src = images[currentImageIndex];
+                    } else if (e.key === 'ArrowRight') {
+                        currentImageIndex = (currentImageIndex + 1) % images.length;
+                        modalImage.src = images[currentImageIndex];
+                    } else if (e.key === 'Escape') {
+                        imageModal.classList.remove('active');
+                    }
                 }
             });
         }
         
-        // Показ контента после загрузки
-        function showContent() {
-            const preloader = document.getElementById('preloader');
-            const content = document.getElementById('content');
-            const loadingComplete = document.getElementById('loading-complete');
+        // Плавная прокрутка для навигации
+        function initSmoothScrolling() {
+            document.querySelectorAll('nav a').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    if (targetId.startsWith('#')) {
+                        const targetElement = document.querySelector(targetId);
+                        
+                        if (targetElement) {
+                            window.scrollTo({
+                                top: targetElement.offsetTop - 80,
+                                behavior: 'smooth'
+                            });
+                        }
+                    }
+                });
+            });
+        }
+        
+        // Эффект появления элементов при скролле
+        function initScrollAnimations() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('fade-in');
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+            
+            document.querySelectorAll('.method, .gallery-item').forEach(el => {
+                observer.observe(el);
+            });
+        }
+        
+        // Обработка загрузки страницы
+        window.addEventListener('load', function() {
+            // Создаем эффекты
+            createParticles();
+            createPreloaderParticles();
+            
+            // Инициализация кастомного курсора
+            initCustomCursor();
+            
+            // Инициализация галереи
+            initGallery();
+            
+            // Плавная прокрутка
+            initSmoothScrolling();
+            
+            // Анимации при скролле
+            initScrollAnimations();
             
             // Показываем сообщение о завершении загрузки
             setTimeout(() => {
-                loadingComplete.classList.add('show');
+                document.getElementById('loading-complete').classList.add('show');
             }, 3000);
             
             // Скрываем прелоадер и показываем контент
             setTimeout(() => {
+                const preloader = document.getElementById('preloader');
+                const content = document.getElementById('content');
+                
                 preloader.style.opacity = '0';
                 
                 setTimeout(() => {
                     preloader.style.display = 'none';
                     content.style.display = 'block';
                     
-                    // Показываем контент с анимацией
                     setTimeout(() => {
                         content.style.opacity = '1';
                     }, 100);
-                    
-                    // Инициализируем остальные функции
-                    initCustomCursor();
-                    initGallery();
-                    initModal();
                 }, 800);
             }, 4000);
-        }
-        
-        // Запуск при загрузке страницы
-        window.addEventListener('load', function() {
-            createParticles();
-            createPreloaderParticles();
-            showContent();
             
             // Эффект скролла для хедера
-            const header = document.getElementById('header');
-            window.addEventListener('scroll', () => {
+            window.addEventListener('scroll', function() {
+                const header = document.getElementById('header');
                 if (window.scrollY > 50) {
                     header.classList.add('scrolled');
                 } else {
