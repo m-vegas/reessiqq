@@ -371,6 +371,7 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             line-height: 1.2;
+            text-shadow: 0 0 10px rgba(145, 71, 255, 0.3);
         }
 
         .hero-subtitle {
@@ -1081,286 +1082,542 @@
             const particleCount = 50;
             
             for (let i = 0; i < particleCount; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'particle';
+                const; i++) {
+                const particle = particle = document.createElement('div document.createElement('div');
+                particle.classList.add');
+                particle.classList.add('('partparticle');
                 
-                // Случайные размеры и позиции
-                const size = Math.random() * 10 + 2;
-                const posX = Math.random() * 100;
-                const posY = Math.random() * 100;
+                //icle');
                 
-                particle.style.width = `${size}px`;
+                // Слу Случайные свойствачайные свойства
+               
+                const size const size = Math = Math.random() * 5 +.random() * 5 + 2 2;
+                const posX =;
+                const posX = Math.random Math.random() *() * 100 100;
+                const pos;
+                const posYY = Math.random = Math.random() *() * 100;
+                100;
+                const const delay = Math delay = Math.random().random() *  * 10;
+10;
+                const duration =                const duration = Math.random Math.random() *() * 10 10 + 10;
+ + 10;
+                
+                               
+                particle.style particle.style.width =.width = `${size}px `${size}px`;
+                particle.style.height =`;
                 particle.style.height = `${size}px`;
-                particle.style.left = `${posX}%`;
-                particle.style.top = `${posY}%`;
+                particle.style.left `${size}px`;
+                particle.style.left = = `${posX}%`;
+                particle.style.top `${posX}%`;
+                particle.style = `${.top = `${posposY}%`;
+                particleY}%`;
+                particle.style.animation.style.animationDelay =Delay = `${delay}s`;
+                `${delay}s`;
+                particle particle.style.animationDuration = `${.style.animationDuration = `${durationduration}s`;
                 
-                // Случайная анимация
-                const duration = Math.random() * 20 + 10;
-                particle.style.animation = `float ${duration}s infinite ease-in-out`;
-                particle.style.animationDelay = `${Math.random() * 5}s`;
+}s`;
                 
-                // Случайный цвет
-                const colors = ['rgba(145, 71, 255, 0.5)', 'rgba(255, 102, 196, 0.5)', 'rgba(0, 201, 255, 0.5)'];
-                particle.style.background = colors[Math.floor(Math.random() * colors.length)];
-                
-                particlesContainer.appendChild(particle);
+                particlesContainer.appendChild                particlesContainer.appendChild(part(particle);
+            }
+icle);
             }
         }
 
-        // Создаем частицы для прелоадера
-        function createPreloaderParticles() {
+        //        }
+
+        // Созда Создаем частицыем частицы для прелоа для прелоадера
+        functionдера
+        function create createPreloaderPPreloaderParticles()articles() {
+            const container = document.getElementById('preloader {
             const container = document.getElementById('preloader-particles');
-            const count = 20;
+            const count = -particles');
+            const count = 15;
+15;
             
-            for (let i = 0; i < count; i++) {
+            for (            
+            for (let i = 0;let i = 0; i < count; i++) {
                 const particle = document.createElement('div');
-                particle.className = 'preloader-particle';
+                particle.classList.add('preloader-particle');
                 
-                // Случайные позиции
+                // Случайные свойства
+                const size = Math.random() *  i < count; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('preloader-particle');
+                
+                // Случайные свойства
+                const size = Math.random() * 5 + 3;
                 const posX = Math.random() * 100;
                 const posY = Math.random() * 100;
+                const delay5 + 3;
+                const posX = Math.random() * 100;
+                const posY = Math.random() * 100;
+                const delay = Math.random() * 2;
+                const duration = Math.random = Math.random() * 2;
+                const duration = Math.random() * 3() * 3 + 3;
                 
-                particle.style.left = `${posX}%`;
-                particle.style.top = `${posY}%`;
+                particle.style.width = + 3;
                 
-                // Случайная анимация
-                const duration = Math.random() * 5 + 3;
-                particle.style.animation = `float ${duration}s infinite ease-in-out`;
-                particle.style.animationDelay = `${Math.random() * 2}s`;
-                
-                // Случайный размер
-                const size = Math.random() * 6 + 4;
-                particle.style.width = `${size}px`;
+                particle.style.width = `${size}px `${size}px`;
                 particle.style.height = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.left =`;
+                particle.style.left = `${posX} `${posX}%`;
+                particle%`;
+                particle.style.top.style.top = `${posY}% = `${posY}%`;
+                particle.style.animationDelay =`;
+                particle.style.animationDelay = `${delay}s `${delay}s`;
+                particle`;
+                particle.style..style.animationDurationanimationDuration = `${duration}s = `${duration}s`;
                 
-                // Случайный цвет
-                const colors = ['#9147ff', '#ff66c4', '#00c9ff'];
-                particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+`;
                 
-                container.appendChild(particle);
+                container.appendChild(particle                container.appendChild(particle);
+            }
+       );
             }
         }
+
+        // }
 
         // Кастомный курсор
-        function initCustomCursor() {
-            const cursor = document.querySelector('.cursor');
-            const cursorFollower = document.querySelector('.cursor-follower');
+        Кастомный курсор
+        function initCustom function initCustomCursor()Cursor() {
+            const cursor = document {
+            const cursor = document.querySelector('..querySelector('.cursor');
+            constcursor');
+            const follower = document.querySelector('. follower = document.querySelector('.cursor-fcursor-follower');
             
-            document.addEventListener('mousemove', (e) => {
-                cursor.style.left = e.clientX + 'px';
-                cursor.style.top = e.clientY + 'px';
+            document.addEventListenerollower');
+            
+            document.addEventListener('mousem('mousemove', function(e) {
+ove', function(e                cursor.style.left =) {
+                cursor.style.left e.clientX + ' = e.clientXpx';
+                cursor + 'px';
+                cursor.style.top = e.clientY.style.top = e + 'px';
+.clientY + 'px';
                 
-                // Задержка для follower для плавности
-                setTimeout(() => {
-                    cursorFollower.style.left = e.clientX + 'px';
-                    cursorFollower.style.top = e.clientY + 'px';
-                }, 100);
+                setTimeout(function                
+                setTimeout(function() {
+                    follower.style.left() {
+                    follower.style.left = e.clientX = e.clientX + 'px';
+                    + 'px';
+                    follower follower.style.top = e.clientY.style.top = e.clientY + 'px';
+ + 'px';
+                },                }, 100);
             });
             
-            // Эффекты при наведении на кликабельные элементы
-            const clickables = document.querySelectorAll('a, button, .gallery-item, .method, .logo, nav a');
+            // Э 100);
+            });
             
-            clickables.forEach(item => {
-                item.addEventListener('mouseenter', () => {
+            // Эффектыффекты при наведении на кликабе при наведении на кликабельные элементы
+льные элементы
+                       const const clickables = document.querySelectorAll clickables = document.querySelectorAll('a, button, .('a, button, .gallery-item,gallery-item, . .method, .method, .logologo, nav a, nav a');
+            
+           ');
+            
+            click clickables.forEachables.forEach(item =>(item => {
+                {
+                item.addEventListener item.addEventListener('mouseenter('mouseenter', () =>', () => {
+                    cursor.classList {
                     cursor.classList.add('hover');
-                    cursorFollower.classList.add('hover');
+                    follower.classList.add('hover');
+                    follower.classList.add('hover');
+               .add('hover');
                 });
                 
-                item.addEventListener('mouseleave', () => {
-                    cursor.classList.remove('hover');
-                    cursorFollower.classList.remove('hover');
+ });
+                
+                item.addEventListener('mouseleave                item.addEventListener('mouseleave', () => {
+                   ', () => {
+                    cursor cursor.classList.remove('hover.classList.remove('hover');
+                   ');
+                    follower.classList follower.classList.remove('hover.remove('hover');
                 });
                 
-                item.addEventListener('mousedown', () => {
-                    cursor.classList.add('click');
-                    cursorFollower.classList.add('click');
+               ');
                 });
                 
-                item.addEventListener('mouseup', () => {
+                item.addEventListener(' item.addEventListener('mousedmousedown', ()own', () => {
+ => {
+                    cursor.classList.add                    cursor.classList.add('click');
+                   ('click');
+                    follower.classList follower.classList.add('click.add('click');
+');
+                });
+                
+                               });
+                
+                item.addEventListener item.addEventListener('mouseup('mouseup', ()', () => {
+                    cursor.classList => {
                     cursor.classList.remove('click');
-                    cursorFollower.classList.remove('click');
+.remove('click');
+                    follower.classList.remove                    follower.classList.remove('click');
+                });
+           ('click');
                 });
             });
+ });
+               }
+
+        // Показываем сооб }
+
+        // Показываем сообщениещение о завершении загрузки
+ о завершении загрузки
+        function showLoadingComplete()        function showLoadingComplete() {
+            const {
+            const loadingComplete = document.getElementById(' loadingComplete = document.getElementById('loading-complete');
+loading-complete');
+            setTimeout(() => {
+                           setTimeout(() => {
+                loadingComplete.classList.add loadingComplete.classList.add('('show');
+            }, show');
+            }, 3000);
+3000);
         }
 
-        // Заполнение галереи
-        function initGallery() {
-            const galleryGrid = document.getElementById('gallery-grid');
+        }
+
+        // Инициали        // Инициализация галерезация галереи
+и
+        function initGallery        function initGallery() {
+            const() {
+            const galleryGrid = document galleryGrid = document.getElementById.getElementById('g('gallery-grid');
             
-            // Массив с путями к изображениям
-            const images = [
-                'https://i.ibb.co/kg95nwJw/panel-1191674226-image-b91f9a0e-37f1-4585-a688-8a847188fb97.jpg',
-                'https://i.ibb.co/HTkp8C6P/9331d8ea-3304-42d4-9955-835b6f4b31b7.jpg',
-                'https://i.ibb.co/7dbgkjJv/96f8340b-034a-402b-b4ae-519317162441.jpg',
-                'https://i.ibb.co/7xYRVL71/5573218e-5453-4a01-8a99-e993ce75928b.jpg',
-                'https://i.ibb.co/hJwDxPTp/989388f8-33a3-43c7-b227-10b21ff627f7.jpg',
-                'https://i.ibb.co/3yccyTP4/aa501d0b-f0c8-4e35-833c-27460e53217c.jpg'
+            // Маallery-grid');
+            
+            // Массив сссив с URL фот URL фотографий
+ографий
+            const            const photos = [
+                photos = [
+                "https://static "https://static-cdn-cdn.jt.jtvnwvnw.net/jtv_user.net/jtv_user_p_pictures/167ictures/167788fb788fb-2efb--2efb-4976-a6f4976-a6f5-5-589587589587277160-profile_image277160-profile_image-300-300x300.png",
+x300.png",
+                "https://                "https://staticstatic-cdn.jtvnw.net/j-cdn.jtvnw.net/jtv_user_picturestv_user_pictures/167788fb/167788fb-2-2efbefb-497-4976-a6-a6f5-6f5-589587277160589587277160-profile_image-70-profile_image-70x70x70.png",
+.png",
+                "                "https://panels.twitchhttps://panels.twitch.tv/panel-.tv/panel-11916742261191674226-image-b-image-b91f991f9aa0e-370e-37f1-f1-45854585-a688--a688-8a8a847188847188fb97",
+               fb97",
+                "https:// "https://static-cdn.jstatic-cdn.jtvnw.net/jtvtvnw.net/jtv_user_pictures_user_pictures/167/167788fb-2efb788fb-2efb-4976-a-4976-a6f6f5-589587277160-profile5-589587277160-profile_image_image-70x70-70x70.png",
+.png",
+                "                "https://https://static-cstatic-cdn.jtdn.jtvnw.net/jvnw.net/jtv_usertv_user_pictures/167_pictures/167788fb788fb-2efb-2efb-4976-a-4976-a6f6f5-5895875-589587277160-profile_image277160-profile_image-300-300x300x300.png.png",
+                "",
+                "https://panels.twitchhttps://panels.twitch.tv/.tv/panel-1191674226panel-1191674226-image-b91f-image-b91f99a0ea0e--37f1-45837f1-4585-a5-a688-8a688-8a847188fb97847188fb97"
+"
             ];
             
-            // Создаем элементы галереи
-            images.forEach((src, index) => {
-                const item = document.createElement('div');
-                item.className = 'gallery-item fade-in';
-                item.style.animationDelay = `${0.1 * index}s`;
+            ];
+            
+                       // Созда // Создаемем элементы га элементы галереи
+           лереи
+            photos photos.forEach((photo,.forEach((photo, index) => {
+                index) => {
+                const galleryItem = document.createElement const galleryItem = document.createElement('div('div');
+                gallery');
+                galleryItem.classList.add('gItem.classList.add('gallery-itemallery-item', 'fade', 'fade-in-in');
+                gallery');
+                galleryItem.styleItem.style.animationDelay =.animationDelay = `${0 `${0.1 * index.1 * index}s`;
                 
-                const img = document.createElement('img');
-                img.src = src;
-                img.alt = `Reessiqq photo ${index + 1}`;
-                img.dataset.index = index;
+               }s`;
                 
-                item.appendChild(img);
-                galleryGrid.appendChild(item);
+                const const img = img = document.createElement(' document.createElement('img');
+               img');
+                img.src img.src = photo;
+ = photo;
+                               img.alt = img.alt = ` `ReessiqqReessiqq photo photo ${index +  ${index + 1}`1}`;
+               ;
+                img.dat img.dataset.index = indexaset.index = index;
                 
-                // Добавляем обработчик для модального окна
-                item.addEventListener('click', () => {
-                    openModal(index);
+;
+                
+                galleryItem                galleryItem.appendChild.appendChild(img);
+                galleryGrid.appendChild(img);
+                galleryGrid.appendChild(gallery(galleryItemItem);
+            });
+            
+           );
+            });
+            
+            // И // Инициализациянициализация мода модального окнального окна после создания после создания галереи галереи
+
+            initModal            initModal((photos);
+        }
+
+photos);
+        }
+
+        //        // Инициализация Инициализация мода модального окна дляльного окна для просмотра фотографий просмотра фотографий
+        function init
+        function initModal(Modal(photos) {
+photos) {
+                       const modal = document const modal = document.getElementById.getElementById('image-modal');
+            const modalImage = document('image-modal');
+            const modalImage = document.getElementById.getElementById('modal-image');
+('modal-image');
+            const closeBtn            const closeBtn = = document.getElementById(' document.getElementById('modal-modal-close');
+            const prevclose');
+            const prevBtn =Btn = document.getElementById('prev-btn');
+ document.getElementById('prev-btn');
+            const nextBtn =            const nextBtn = document.getElementById('next-btn document.getElementById('next-btn');
+');
+            
+            let currentIndex            
+            let currentIndex =  = 0;
+            
+           0;
+            
+            // Открытие // Открытие мода модального окльного окна
+на
+            document.querySelectorAll            document.querySelectorAll('.('.gallery-item img').gallery-item img').forEach((img, index)forEach((img, => {
+                img.addEventListener('click index) => {
+                img.addEventListener('click',', () => {
+ () => {
+                    currentIndex                    currentIndex = parseInt(img.dataset.index = parseInt(img.dataset.index);
+                   );
+                    modalImage.src modalImage.src = photos[current = photos[currentIndex];
+                    modalIndex];
+                    modal.classList.add.classList.add('active');
+('active');
+                                       document.body.style. document.body.style.overflow =overflow = 'hidden 'hidden';
+';
+                });
                 });
             });
-        }
-
-        // Модальное окно для фотографий
-        function initModal() {
-            const modal = document.getElementById('image-modal');
-            const modalImage = document.getElementById('modal-image');
-            const closeBtn = document.getElementById('modal-close');
-            const prevBtn = document.getElementById('prev-btn');
-            const nextBtn = document.getElementById('next-btn');
             
-            let currentIndex = 0;
-            const images = document.querySelectorAll('.gallery-item img');
-            const imageSources = Array.from(images).map(img => img.src);
+                       });
             
-            function openModal(index) {
-                currentIndex = index;
-                modalImage.src = imageSources[currentIndex];
-                modal.classList.add('active');
-                document.body.style.overflow = 'hidden';
-            }
+            // Закрытие // Закрытие модального модального окна
+            окна
+            closeBtn.addEventListener(' closeBtn.addEventListener('click',click', () => {
+                modal.classList () => {
+                modal.classList.remove.remove('active('active');
+                document');
+                document.body.style..body.style.overflow = 'overflow = 'auto';
+auto';
+            });
+            });
             
-            function closeModal() {
-                modal.classList.remove('active');
-                document.body.style.overflow = 'auto';
-            }
-            
-            function showNext() {
-                currentIndex = (currentIndex + 1) % imageSources.length;
-                modalImage.src = imageSources[currentIndex];
-            }
-            
-            function showPrev() {
-                currentIndex = (currentIndex - 1 + imageSources.length) % imageSources.length;
-                modalImage.src = imageSources[currentIndex];
-            }
-            
-            // Обработчики событий
-            closeBtn.addEventListener('click', closeModal);
-            prevBtn.addEventListener('click', showPrev);
-            nextBtn.addEventListener('click', showNext);
-            
-            modal.addEventListener('click', (e) => {
-                if (e.target === modal) {
-                    closeModal();
+            //            
+            // Зак Закрытие порытие по клику клику на о на оверлей
+           верлей
+            modal.addEventListener('click modal.addEventListener('click',', (e (e) => {
+) => {
+                if                if (e.target (e.target === modal) {
+ === modal) {
+                                       modal.classList modal.classList.remove('active.remove('active');
+                    document.body');
+.style.overflow                    document.body.style.overflow = 'auto';
+                = 'auto';
                 }
             });
             
-            // Навигация с клавиатуры
-            document.addEventListener('keydown', (e) => {
-                if (modal.classList.contains('active')) {
-                    if (e.key === 'Escape') closeModal();
-                    if (e.key === 'ArrowRight') showNext();
-                    if (e.key === 'ArrowLeft') showPrev();
+ }
+            });
+            
+                       // Навигация
+            prev // Навигация
+           Btn.addEventListener('click', prevBtn.addEventListener('click', (e) => {
+                (e) => {
+                e e.stopPropagation();
+                currentIndex.stopPropagation();
+                currentIndex = (current = (currentIndex - 1 +Index - 1 + photos.length) % photos.length photos.length) % photos.length;
+                modalImage.src =;
+                modalImage.src = photos[current photos[currentIndex];
+           Index];
+            });
+ });
+            
+            nextBtn            
+            nextBtn.addEventListener('click',.addEventListener('click', (e) => (e) => {
+                e.stopProp {
+                e.stopPropagationagation();
+                currentIndex = (currentIndex + 1) % photos.length;
+                modal();
+                currentIndex = (currentIndex + 1) % photos.length;
+                modalImage.src =Image.src = photos[currentIndex];
+            photos[currentIndex];
+            });
+            
+            // Навигация с помощью клавиатуры
+            document.addEventListener(' });
+            
+            // Навигация с помощью клавиатуры
+            document.addEventListener('keydown', (keydown', (e) => {
+                ife) => {
+                if (modal.classList.contains(' (modal.classList.contains('activeactive')) {
+                   ')) {
+                    if (e if.key === 'E (e.key ===scape') 'Escape') {
+ {
+                        modal.classList.remove('                        modal.classList.remove('activeactive');
+                        document');
+                        document.body.style.body.style.overflow =.overflow = 'auto 'auto';
+                    } else if';
+                    } else if (e.key (e.key === === 'ArrowLeft') {
+ 'ArrowLeft') {
+                                               currentIndex = ( currentIndex = (currentIndexcurrentIndex - 1 + photos.length) % - 1 + photos.length) % photos.length photos.length;
+                        modal;
+                        modalImageImage.src = photos[current.src = photos[currentIndex];
+                    } else ifIndex];
+                    } else if (e.key === 'Arrow (e.key === 'ArrowRight')Right') {
+ {
+                        currentIndex = (currentIndex + 1) %                        currentIndex = (currentIndex + 1) photos.length;
+                        modal % photos.length;
+                        modalImage.src = photos[currentIndexImage.src = photos[currentIndex];
+                   ];
+                    }
                 }
             });
         }
 
-        // Плавная прокрутка для навигации
-        function initSmoothScroll() {
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function(e) {
-                    if (this.classList.contains('external-link')) return;
-                    
+        // Плав }
+                }
+            });
+        }
+
+        // Плавная прокрутканая прокрутка для навигации
+        function init для навигации
+        function initSmoothScrolling() {
+            document.querySelectorAll('SmoothScrolling() {
+            document.querySelectora[href^="#"]').forEach(anchor => {
+               All('a[href^="#"]').forEach(anchor => anchor.addEventListener('click', {
+                anchor function(e) {
+.addEventListener('click', function(e) {
                     e.preventDefault();
                     
-                    const targetId = this.getAttribute('href');
-                    if (targetId === '#') return;
+                                       e.preventDefault();
                     
-                    const targetElement = document.querySelector(targetId);
-                    if (targetElement) {
-                        targetElement.scrollIntoView({
-                            behavior: 'smooth',
-                            block: 'start'
+ const targetId =                    const targetId = this.getAttribute('href this.getAttribute('href');
+');
+                    if                    if ( (targetId ===targetId === '#') return;
+ '#') return;
+                    
+                    
+                    const target                    const targetElement = document.querySelectorElement = document.querySelector(targetId);
+                   (targetId);
+                    if ( if (targetElementtargetElement) {
+                       ) {
+                        window.sc window.scrollTo({
+rollTo({
+                            top: targetElement.                            top: targetElement.offsetTop - offsetTop - 100,
+                            behavior100,
+                            behavior: 'smooth'
+: 'smooth'
+                        });
                         });
                     }
                 });
-            });
-        }
-
-        // Эффект появления элементов при скролле
-        function initScrollAnimations() {
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('fade-in');
-                        observer.unobserve(entry.target);
-                    }
+                               }
                 });
-            }, {
-                threshold: 0.1
-            });
-            
-            document.querySelectorAll('.fade-in').forEach(el => {
-                observer.observe(el);
             });
         }
 
-        // Обработка скролла для хедера
-        function initHeaderScroll() {
-            const header = document.getElementById('header');
+        });
+        }
+
+        // Э // Эффект поффект появления элементов при скрявления элементов при скролле
+        functionолле
+        function initScrollAnimations() initScrollAnimations() {
+            const {
+            const observer observer = = new Inters new IntersectionObserver((entries) =>ectionObserver((entries) => {
+                {
+                entries.forEach( entries.forEach(entry => {
+entry => {
+                    if                    if (entry.isIntersecting) (entry.isIntersecting) {
+                        entry.target {
+                        entry.target.classList.add.classList.add('fade-in('fade-in');
+                       ');
+                        observer.un observer.unobserveobserve(entry.target);
+(entry.target);
+                    }
+                                   }
+                });
+            });
+            }, { }, { threshold: 0. threshold: 0.1 });
+            
+           1 });
+            
+            document.querySelector document.querySelectorAll('.All('.fadefade-in').forEach(item-in').forEach(item => {
+ => {
+                observer                observer.ob.observe(item);
+            });
+        }
+
+        // Изменениеserve(item);
+            });
+        }
+
+        // Из хедера при скменение хедера при скролле
+       ролле
+        function function initHeaderScroll() {
+            const initHeaderScroll() {
+            const header = header = document.getElementById(' document.getElementById('headerheader');
+            
+            window');
             
             window.addEventListener('scroll', () => {
-                if (window.scrollY > 100) {
-                    header.classList.add('scrolled');
+                if (.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+window.scrollY > 50) {
+                    header                    header.classList.add.classList.add('sc('scrolled');
+rolled');
                 } else {
-                    header.classList.remove('scrolled');
+                } else {
+                    header.classList.remove                    header.classList.remove('scrolled');
+('scrolled');
                 }
+                }
+            });
             });
         }
 
-        // Инициализация прелоадера
-        function initPreloader() {
-            const preloader = document.getElementById('preloader');
-            const content = document.getElementById('content');
-            const loadingComplete = document.getElementById('loading-complete');
-            
-            // Симулируем загрузку
-            setTimeout(() => {
-                loadingComplete.classList.add('show');
-            }, 2500);
-            
-            setTimeout(() => {
-                preloader.style.opacity = '0';
-                setTimeout(() => {
-                    preloader.style.display = 'none';
-                    content.style.display = 'block';
-                    setTimeout(() => {
-                        content.style.opacity = '1';
-                    }, 50);
-                }, 800);
-            }, 3500);
         }
 
-        // Основная инициализация
-        document.addEventListener('DOMContentLoaded', () => {
-            createParticles();
-            createPreloaderParticles();
-            initCustomCursor();
-            initGallery();
-            initModal();
-            initSmoothScroll();
-            initScrollAnimations();
-            initHeaderScroll();
-            initPreloader();
+        // Инициализация        // Инициализация после загруз после загрузки DOMки DOM
+        document
+        document.addEventListener('.addEventListener('DOMContentLoaded',DOMContentLoaded', function function() {
+           () {
+            createP createParticles();
+            createarticles();
+            createPreloaderPreloaderParticlesParticles();
+           ();
+            showLoadingComplete();
+ showLoadingComplete();
+            
+            
+            //            // Си Симуляция замуляция загрузкигрузки
+            setTimeout(()
+            setTimeout(() => {
+                document => {
+                document.getElementById('.getElementById('preloader').stylepreloader').style.opacity = '.opacity = '0';
+0';
+                document.getElementById('                document.getElementById('content').content').style.display = 'style.display = 'block';
+                
+               block';
+                
+                setTimeout(() => {
+ setTimeout(() => {
+                    document                    document.getElementById('preloader.getElementById('preloader').style').style.display = 'none.display = 'none';
+                   ';
+                    document.getElementById document.getElementById('content').style('content').style.opacity.opacity = ' = '1';
+                    
+                   1';
+                    
+                    // Ини // Инициалициализация функционазация функционала после показа конла после показа контента
+тента
+                    initCustom                    initCustomCursor();
+Cursor();
+                    init                    initGallery();
+Gallery();
+                    initSmooth                    initSmoothScScrolling();
+                    initScrollrolling();
+                    initScrollAnimations();
+                    initHeaderAnimations();
+                    initHeaderScroll();
+                },Scroll();
+                }, 800 800);
+           );
+            },  }, 40004000);
+);
+        });
         });
     </script>
+</    </script>
 </body>
 </html>
